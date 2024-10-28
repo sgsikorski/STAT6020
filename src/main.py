@@ -19,7 +19,7 @@ import sys
 
 # Set random seed for reproducibility
 np.random.seed(0)
-DEBUG = False
+DEBUG = True
 
 
 class DPMM:
@@ -28,16 +28,17 @@ class DPMM:
         self._lambda = 1
         self.iters = iters
         self.cols = [
-            "Moving Time",
+            "Time",
             "Distance",
-            "Max Speed",
-            "Average Speed",
-            "Average Heart Rate",
-            "Max Heart Rate",
-            "Average Watts",
+            "Avg Pace",
+            "Best Pace",
+            "Avg HR",
+            "Max HR",
+            "Avg Power",
+            "Max Power",
         ]
 
-    def initializeData(self, dataset="Project/src/activities.csv"):
+    def initializeData(self, dataset="src/Activities.csv"):
         self.data = self.loadData(dataset)
         self.mu = np.zeros(self.data.shape[1])
         self.psi = np.eye(self.data.shape[1])
@@ -45,17 +46,31 @@ class DPMM:
 
     def loadData(self, dataset):
         df = pd.read_csv(dataset)
-        df["Activity Date"] = pd.to_datetime(df["Activity Date"])
-        one_year_ago = datetime.now() - timedelta(days=365)
-        df = df[df["Activity Date"] > one_year_ago]
-        df = df[df["Activity Type"] == "Run"]
-        df = df[df["From Upload"] == 1.0]
+        df["Date"] = pd.to_datetime(df["Date"])
+        df = df.replace("--", np.nan)
+        one_year_ago = datetime.now() - timedelta(days=120)
+        df = df[df["Date"] > one_year_ago]
+        df = df[df["Activity Type"] == "Running"]
+        df = df[self.cols]
+        df.dropna(inplace=True)
+
+        def hmsToSeconds(x):
+            h, m, s = map(float, x.split(":"))
+            return h * 3600 + m * 60 + s
+
+        def paceToSpeed(pace):
+            print(pace)
+            minutes, seconds = map(int, pace.split(":"))
+            pace_in_minutes = minutes + seconds / 60
+            speed = 60 / pace_in_minutes
+            return speed
+
+        df["Time"] = df["Time"].apply(hmsToSeconds)
+        df["Avg Pace"] = df["Avg Pace"].apply(paceToSpeed)
+        df["Best Pace"] = df["Best Pace"].apply(paceToSpeed)
 
         if DEBUG:
             print(df.columns.array.tolist())
-        df = df[self.cols]
-        df.dropna(inplace=True)
-        if DEBUG:
             print(df)
         return df
 
@@ -169,7 +184,7 @@ def plotParallelCoordinates(data, clusters):
     plt.ylabel("Value")
     plt.xticks(rotation=45)
     plt.grid(True)
-    plt.savefig("Project/src/parallel_coordinates.png")
+    plt.savefig("res/parallel_coordinates.png")
     if DEBUG:
         plt.show()
 
@@ -202,7 +217,7 @@ def plotClusters3d(data, clusters):
             va="center",
             bbox=dict(facecolor="white", edgecolor="black", boxstyle="round,pad=0.5"),
         )
-    plt.savefig("Project/src/cluster_plot_3d.png")
+    plt.savefig("res/cluster_plot_3d.png")
     if DEBUG:
         plt.show()
 
@@ -245,7 +260,7 @@ def plotClusters2d(data, clusters):
             va="center",
             bbox=dict(facecolor="white", edgecolor="black", boxstyle="round,pad=0.5"),
         )
-    plt.savefig("Project/src/cluster_plot.png")
+    plt.savefig("res/cluster_plot.png")
     if DEBUG:
         plt.show()
 
@@ -265,7 +280,7 @@ def main():
 
     if DEBUG:
         pointToAssign = defaultdict(list)
-        with open("Project/src/cluster_assignments.txt", "w") as f:
+        with open("res/cluster_assignments.txt", "w+") as f:
             for i, (_, d) in enumerate(data.iterrows()):
                 pointToAssign[assignments[i]].append(d)
                 f.write(f"Point: {d} assigned to cluster {assignments[i]}\n")
