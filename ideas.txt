@@ -1,0 +1,18 @@
+Cluster estimation for injury detection
+    If a user labelled easy run deviates from the easy cluster, then it may indicate an injury
+
+
+Run type detection
+    Determine what type of round\
+
+
+Types of run
+----------------
+WU/CD
+Double
+Workout
+    Possible types of workout?
+LR
+TR
+Recovery
+Speed work/strides?
