@@ -1,3 +1,4 @@
+# Latex files
 *.aux
 *.fdb_latexmk
 *.fls
@@ -5,3 +6,7 @@
 *.sty
 *.synctex.gz
 *.out
+*.bbl
+*.blg
+
+__pycache__

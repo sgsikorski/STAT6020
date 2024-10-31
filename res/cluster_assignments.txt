@@ -1,1305 +1,148 @@
-Point: Time         0.340119
-Distance     0.322278
-Avg Pace     0.317389
-Best Pace    0.157290
-Avg HR       0.360000
-Max HR       0.413793
-Avg Power    0.392405
-Max Power    0.357143
-Name: 0, dtype: float64 assigned to cluster 2
-Point: Time         0.845409
-Distance     0.813266
-Avg Pace     0.381409
-Best Pace    0.139556
-Avg HR       0.520000
-Max HR       0.448276
-Avg Power    0.468354
-Max Power    0.546584
-Name: 1, dtype: float64 assigned to cluster 0
-Point: Time         0.267033
-Distance     0.237924
-Avg Pace     0.194112
-Best Pace    0.108869
-Avg HR       0.440000
-Max HR       0.396552
-Avg Power    0.265823
-Max Power    0.291925
-Name: 2, dtype: float64 assigned to cluster 2
-Point: Time         0.602809
-Distance     0.597693
-Avg Pace     0.436496
-Best Pace    0.876780
-Avg HR       0.500000
-Max HR       0.672414
-Avg Power    0.335443
-Max Power    0.878882
-Name: 3, dtype: float64 assigned to cluster 1
-Point: Time         0.616201
-Distance     0.611391
-Avg Pace     0.442776
-Best Pace    0.329137
-Avg HR       0.340000
-Max HR       0.448276
-Avg Power    0.537975
-Max Power    0.540373
-Name: 4, dtype: float64 assigned to cluster 0
-Point: Time         0.633229
-Distance     0.596251
-Avg Pace     0.328770
-Best Pace    0.112203
-Avg HR       0.040000
-Max HR       0.000000
-Avg Power    0.392405
-Max Power    0.304348
-Name: 5, dtype: float64 assigned to cluster 4
-Point: Time         0.260145
-Distance     0.244412
-Avg Pace     0.289419
-Best Pace    0.171848
-Avg HR       0.340000
-Max HR       0.241379
-Avg Power    0.360759
-Max Power    0.291925
-Name: 6, dtype: float64 assigned to cluster 2
-Point: Time         0.888840
-Distance     0.848594
-Avg Pace     0.363599
-Best Pace    0.850376
-Avg HR       0.460000
-Max HR       0.586207
-Avg Power    0.170886
-Max Power    1.000000
-Name: 7, dtype: float64 assigned to cluster 1
-Point: Time         0.657910
-Distance     0.596972
-Avg Pace     0.246052
-Best Pace    0.108869
-Avg HR       0.220000
-Max HR       0.206897
-Avg Power    0.259494
-Max Power    0.537267
-Name: 8, dtype: float64 assigned to cluster 4
-Point: Time         0.851914
-Distance     0.885364
-Avg Pace     0.561640
-Best Pace    0.450317
-Avg HR       0.680000
-Max HR       0.603448
-Avg Power    0.639241
-Max Power    0.639752
-Name: 9, dtype: float64 assigned to cluster 3
-Point: Time         0.264546
-Distance     0.238645
-Avg Pace     0.209439
-Best Pace    0.225582
-Avg HR       0.540000
-Max HR       0.431034
-Avg Power    0.284810
-Max Power    0.313665
-Name: 10, dtype: float64 assigned to cluster 2
-Point: Time         0.161039
-Distance     0.127614
-Avg Pace     0.000000
-Best Pace    0.005529
-Avg HR       0.420000
-Max HR       0.362069
-Avg Power    0.000000
-Max Power    0.000000
-Name: 11, dtype: float64 assigned to cluster 2
-Point: Time         0.127748
-Distance     0.130497
-Avg Pace     0.381409
-Best Pace    0.434054
-Avg HR       0.400000
-Max HR       0.431034
-Avg Power    0.417722
-Max Power    0.521739
-Name: 12, dtype: float64 assigned to cluster 5
-Point: Time         0.000000
-Distance     0.000000
-Avg Pace     0.016986
-Best Pace    0.125726
-Avg HR       0.740000
-Max HR       0.551724
-Avg Power    0.132911
-Max Power    0.195652
-Name: 13, dtype: float64 assigned to cluster 2
-Point: Time         0.329596
-Distance     0.311464
-Avg Pace     0.311740
-Best Pace    0.139556
-Avg HR       0.200000
-Max HR       0.189655
-Avg Power    0.354430
-Max Power    0.366460
-Name: 14, dtype: float64 assigned to cluster 4
-Point: Time         0.468307
-Distance     0.452776
-Avg Pace     0.369506
-Best Pace    0.217628
-Avg HR       0.320000
-Max HR       0.344828
-Avg Power    0.468354
-Max Power    0.434783
-Name: 15, dtype: float64 assigned to cluster 2
-Point: Time         0.248666
-Distance     0.236482
-Avg Pace     0.306119
-Best Pace    0.098976
-Avg HR       0.280000
-Max HR       0.275862
-Avg Power    0.386076
-Max Power    0.260870
-Name: 16, dtype: float64 assigned to cluster 2
-Point: Time         0.485526
-Distance     0.452776
-Avg Pace     0.294958
-Best Pace    0.824670
-Avg HR       0.400000
-Max HR       0.620690
-Avg Power    0.234177
-Max Power    0.701863
-Name: 17, dtype: float64 assigned to cluster 1
-Point: Time         0.620985
-Distance     0.596972
-Avg Pace     0.369506
-Best Pace    0.139556
-Avg HR       0.460000
-Max HR       0.413793
-Avg Power    0.449367
-Max Power    0.431677
-Name: 18, dtype: float64 assigned to cluster 0
-Point: Time         0.608740
-Distance     0.596972
-Avg Pace     0.411700
-Best Pace    0.676423
-Avg HR       0.680000
-Max HR       0.827586
-Avg Power    0.322785
-Max Power    0.838509
-Name: 19, dtype: float64 assigned to cluster 1
-Point: Time         0.367287
-Distance     0.310743
-Avg Pace     0.106465
-Best Pace    0.271110
-Avg HR       0.220000
-Max HR       0.241379
-Avg Power    0.170886
-Max Power    0.534161
-Name: 20, dtype: float64 assigned to cluster 4
-Point: Time         0.842539
-Distance     0.812545
-Avg Pace     0.387406
-Best Pace    0.168177
-Avg HR       0.540000
-Max HR       0.465517
-Avg Power    0.468354
-Max Power    0.447205
-Name: 21, dtype: float64 assigned to cluster 0
-Point: Time         0.263015
-Distance     0.237924
-Avg Pace     0.219777
-Best Pace    0.129154
-Avg HR       0.320000
-Max HR       0.206897
-Avg Power    0.297468
-Max Power    0.437888
-Name: 22, dtype: float64 assigned to cluster 4
-Point: Time         0.686992
-Distance     0.746936
-Avg Pace     0.662447
-Best Pace    0.876780
-Avg HR       0.680000
-Max HR       1.000000
-Avg Power    0.550633
-Max Power    0.670807
-Name: 23, dtype: float64 assigned to cluster 1
-Point: Time         0.659058
-Distance     0.633021
-Avg Pace     0.369506
-Best Pace    0.698289
-Avg HR       0.380000
-Max HR       0.500000
-Avg Power    0.443038
-Max Power    0.531056
-Name: 24, dtype: float64 assigned to cluster 1
-Point: Time         0.650449
-Distance     0.596972
-Avg Pace     0.272960
-Best Pace    0.209770
-Avg HR       0.340000
-Max HR       0.344828
-Avg Power    0.310127
-Max Power    0.288820
-Name: 25, dtype: float64 assigned to cluster 0
-Point: Time         0.342415
-Distance     0.308580
-Avg Pace     0.219777
-Best Pace    0.073374
-Avg HR       0.060000
-Max HR       0.172414
-Avg Power    0.284810
-Max Power    0.248447
-Name: 26, dtype: float64 assigned to cluster 4
-Point: Time         0.708994
-Distance     0.669070
-Avg Pace     0.334503
-Best Pace    0.683652
-Avg HR       0.560000
-Max HR       0.758621
-Avg Power    0.202532
-Max Power    0.692547
-Name: 27, dtype: float64 assigned to cluster 1
-Point: Time         0.660206
-Distance     0.621485
-Avg Pace     0.328770
-Best Pace    0.669252
-Avg HR       0.600000
-Max HR       0.551724
-Avg Power    0.379747
-Max Power    0.549689
-Name: 28, dtype: float64 assigned to cluster 1
-Point: Time         0.911034
-Distance     0.961067
-Avg Pace     0.596750
-Best Pace    0.245895
-Avg HR       0.560000
-Max HR       0.500000
-Avg Power    0.689873
-Max Power    0.633540
-Name: 29, dtype: float64 assigned to cluster 3
-Point: Time         0.439991
-Distance     0.377073
-Avg Pace     0.130097
-Best Pace    0.000000
-Avg HR       0.380000
-Max HR       0.344828
-Avg Power    0.164557
-Max Power    0.291925
-Name: 30, dtype: float64 assigned to cluster 4
-Point: Time         0.282913
-Distance     0.308580
-Avg Pace     0.596750
-Best Pace    0.288454
-Avg HR       0.660000
-Max HR       0.586207
-Avg Power    0.664557
-Max Power    0.555901
-Name: 31, dtype: float64 assigned to cluster 6
-Point: Time         0.104598
-Distance     0.093006
-Avg Pace     0.149390
-Best Pace    0.073374
-Avg HR       0.320000
-Max HR       0.206897
-Avg Power    0.183544
-Max Power    0.161491
-Name: 32, dtype: float64 assigned to cluster 2
-Point: Time         0.356382
-Distance     0.452776
-Avg Pace     1.000000
-Best Pace    0.543253
-Avg HR       1.000000
-Max HR       0.758621
-Avg Power    1.000000
-Max Power    0.888199
-Name: 33, dtype: float64 assigned to cluster 6
-Point: Time         0.097136
-Distance     0.093006
-Avg Pace     0.246052
-Best Pace    0.057923
-Avg HR       0.200000
-Max HR       0.103448
-Avg Power    0.303797
-Max Power    0.344720
-Name: 34, dtype: float64 assigned to cluster 4
-Point: Time         0.649683
-Distance     0.558039
-Avg Pace     0.139700
-Best Pace    0.019599
-Avg HR       0.240000
-Max HR       0.172414
-Avg Power    0.189873
-Max Power    0.204969
-Name: 35, dtype: float64 assigned to cluster 4
-Point: Time         0.697897
-Distance     0.666186
-Avg Pace     0.357722
-Best Pace    0.194332
-Avg HR       0.460000
-Max HR       0.448276
-Avg Power    0.430380
-Max Power    0.428571
-Name: 36, dtype: float64 assigned to cluster 0
-Point: Time         0.327109
-Distance     0.338861
-Avg Pace     0.500789
-Best Pace    0.627418
-Avg HR       0.460000
-Max HR       0.465517
-Avg Power    0.537975
-Max Power    0.518634
-Name: 37, dtype: float64 assigned to cluster 5
-Point: Time         0.723344
-Distance     0.744052
-Avg Pace     0.527471
-Best Pace    0.607237
-Avg HR       0.680000
-Max HR       0.827586
-Avg Power    0.455696
-Max Power    0.493789
-Name: 38, dtype: float64 assigned to cluster 1
-Point: Time         0.930740
-Distance     0.957462
-Avg Pace     0.534232
-Best Pace    0.407695
-Avg HR       0.720000
-Max HR       0.568966
-Avg Power    0.677215
-Max Power    0.605590
-Name: 39, dtype: float64 assigned to cluster 3
-Point: Time         0.153577
-Distance     0.124009
-Avg Pace     0.025588
-Best Pace    0.036965
-Avg HR       0.500000
-Max HR       0.362069
-Avg Power    0.063291
-Max Power    0.139752
-Name: 40, dtype: float64 assigned to cluster 2
-Point: Time         0.132914
-Distance     0.131218
-Avg Pace     0.328770
-Best Pace    0.720702
-Avg HR       0.180000
-Max HR       0.672414
-Avg Power    0.430380
-Max Power    0.677019
-Name: 41, dtype: float64 assigned to cluster 5
-Point: Time         0.049879
-Distance     0.044701
-Avg Pace     0.120580
-Best Pace    0.310764
-Avg HR       0.000000
-Max HR       0.000000
-Avg Power    0.170886
-Max Power    0.242236
-Name: 42, dtype: float64 assigned to cluster 2
-Point: Time         0.322326
-Distance     0.310743
-Avg Pace     0.351873
-Best Pace    0.164527
-Avg HR       0.360000
-Max HR       0.448276
-Avg Power    0.430380
-Max Power    0.388199
-Name: 43, dtype: float64 assigned to cluster 2
-Point: Time         0.540819
-Distance     0.525595
-Avg Pace     0.387406
-Best Pace    0.102256
-Avg HR       0.180000
-Max HR       0.293103
-Avg Power    0.443038
-Max Power    0.043478
-Name: 44, dtype: float64 assigned to cluster 4
-Point: Time         0.266459
-Distance     0.235761
-Avg Pace     0.178998
-Best Pace    0.092471
-Avg HR       0.160000
-Max HR       0.103448
-Avg Power    0.196203
-Max Power    0.481366
-Name: 45, dtype: float64 assigned to cluster 4
-Point: Time         0.527044
-Distance     0.534247
-Avg Pace     0.481146
-Best Pace    0.620638
-Avg HR       0.300000
-Max HR       0.431034
-Avg Power    0.424051
-Max Power    0.515528
-Name: 46, dtype: float64 assigned to cluster 1
-Point: Time         0.647005
-Distance     0.608508
-Avg Pace     0.323065
-Best Pace    0.258385
-Avg HR       0.500000
-Max HR       0.465517
-Avg Power    0.398734
-Max Power    0.406832
-Name: 47, dtype: float64 assigned to cluster 0
-Point: Time         0.863202
-Distance     0.814708
-Avg Pace     0.340264
-Best Pace    0.262600
-Avg HR       0.240000
-Max HR       0.293103
-Avg Power    0.411392
-Max Power    0.344720
-Name: 48, dtype: float64 assigned to cluster 0
-Point: Time         0.374558
-Distance     0.344629
-Avg Pace     0.262119
-Best Pace    0.076514
-Avg HR       0.260000
-Max HR       0.258621
-Avg Power    0.322785
-Max Power    0.220497
-Name: 49, dtype: float64 assigned to cluster 4
-Point: Time         0.257084
-Distance     0.236482
-Avg Pace     0.246052
-Best Pace    0.129154
-Avg HR       0.340000
-Max HR       0.189655
-Avg Power    0.310127
-Max Power    0.260870
-Name: 50, dtype: float64 assigned to cluster 4
-Point: Time         0.659058
-Distance     0.672675
-Avg Pace     0.507406
-Best Pace    0.728298
-Avg HR       0.600000
-Max HR       0.793103
-Avg Power    0.468354
-Max Power    0.748447
-Name: 51, dtype: float64 assigned to cluster 1
-Point: Time         0.657336
-Distance     0.634463
-Avg Pace     0.381409
-Best Pace    0.850376
-Avg HR       0.340000
-Max HR       0.379310
-Avg Power    0.392405
-Max Power    0.767081
-Name: 52, dtype: float64 assigned to cluster 1
-Point: Time         0.812501
-Distance     0.777938
-Avg Pace     0.369506
-Best Pace    0.387254
-Avg HR       0.400000
-Max HR       0.413793
-Avg Power    0.481013
-Max Power    0.745342
-Name: 53, dtype: float64 assigned to cluster 0
-Point: Time         0.662311
-Distance     0.707282
-Avg Pace     0.611066
-Best Pace    0.461353
-Avg HR       0.720000
-Max HR       0.724138
-Avg Power    0.639241
-Max Power    0.425466
-Name: 54, dtype: float64 assigned to cluster 3
-Point: Time         0.752042
-Distance     0.669070
-Avg Pace     0.209439
-Best Pace    0.620638
-Avg HR       0.100000
-Max HR       0.155172
-Avg Power    0.246835
-Max Power    0.605590
-Name: 55, dtype: float64 assigned to cluster 0
-Point: Time         1.000000
-Distance     0.957462
-Avg Pace     0.375442
-Best Pace    0.171848
-Avg HR       0.560000
-Max HR       0.431034
-Avg Power    0.468354
-Max Power    0.434783
-Name: 56, dtype: float64 assigned to cluster 0
-Point: Time         0.307594
-Distance     0.260995
-Avg Pace     0.111149
-Best Pace    0.284077
-Avg HR       0.520000
-Max HR       0.551724
-Avg Power    0.101266
-Max Power    0.239130
-Name: 57, dtype: float64 assigned to cluster 2
-Point: Time         0.142097
-Distance     0.140591
-Avg Pace     0.334503
-Best Pace    0.683652
-Avg HR       0.240000
-Max HR       0.379310
-Avg Power    0.360759
-Max Power    0.434783
-Name: 58, dtype: float64 assigned to cluster 5
-Point: Time         0.322900
-Distance     0.310743
-Avg Pace     0.346055
-Best Pace    0.275405
-Avg HR       0.380000
-Max HR       0.241379
-Avg Power    0.424051
-Max Power    0.611801
-Name: 59, dtype: float64 assigned to cluster 5
-Point: Time         0.451662
-Distance     0.454218
-Avg Pace     0.455432
-Best Pace    0.867899
-Avg HR       0.420000
-Max HR       0.500000
-Avg Power    0.443038
-Max Power    0.770186
-Name: 60, dtype: float64 assigned to cluster 1
-Point: Time         0.566266
-Distance     0.534247
-Avg Pace     0.328770
-Best Pace    0.129154
-Avg HR       0.260000
-Max HR       0.155172
-Avg Power    0.367089
-Max Power    0.332298
-Name: 61, dtype: float64 assigned to cluster 4
-Point: Time         0.342224
-Distance     0.309301
-Avg Pace     0.224982
-Best Pace    0.086036
-Avg HR       0.320000
-Max HR       0.275862
-Avg Power    0.265823
-Max Power    0.248447
-Name: 62, dtype: float64 assigned to cluster 4
-Point: Time         0.578510
-Distance     0.597693
-Avg Pace     0.527471
-Best Pace    0.980050
-Avg HR       0.460000
-Max HR       0.689655
-Avg Power    0.462025
-Max Power    0.885093
-Name: 63, dtype: float64 assigned to cluster 1
-Point: Time         0.654084
-Distance     0.614996
-Avg Pace     0.323065
-Best Pace    0.775243
-Avg HR       0.180000
-Max HR       0.206897
-Avg Power    0.367089
-Max Power    0.583851
-Name: 64, dtype: float64 assigned to cluster 1
-Point: Time         0.448792
-Distance     0.379957
-Avg Pace     0.111149
-Best Pace    0.139556
-Avg HR       0.280000
-Max HR       0.120690
-Avg Power    0.221519
-Max Power    0.332298
-Name: 65, dtype: float64 assigned to cluster 4
-Point: Time         0.954273
-Distance     0.921413
-Avg Pace     0.393433
-Best Pace    0.186749
-Avg HR       0.380000
-Max HR       0.482759
-Avg Power    0.474684
-Max Power    0.527950
-Name: 66, dtype: float64 assigned to cluster 0
-Point: Time         0.357147
-Distance     0.380678
-Avg Pace     0.568586
-Best Pace    0.607237
-Avg HR       0.620000
-Max HR       0.672414
-Avg Power    0.462025
-Max Power    0.459627
-Name: 67, dtype: float64 assigned to cluster 5
-Point: Time         0.574684
-Distance     0.596251
-Avg Pace     0.541028
-Best Pace    0.950828
-Avg HR       0.620000
-Max HR       0.758621
-Avg Power    0.462025
-Max Power    0.795031
-Name: 68, dtype: float64 assigned to cluster 1
-Point: Time         0.626342
-Distance     0.597693
-Avg Pace     0.357722
-Best Pace    0.713169
-Avg HR       0.440000
-Max HR       0.431034
-Avg Power    0.424051
-Max Power    0.624224
-Name: 69, dtype: float64 assigned to cluster 1
-Point: Time         0.785333
-Distance     0.746215
-Avg Pace     0.351873
-Best Pace    0.250032
-Avg HR       0.340000
-Max HR       0.258621
-Avg Power    0.411392
-Max Power    0.462733
-Name: 70, dtype: float64 assigned to cluster 0
-Point: Time         0.273155
-Distance     0.308580
-Avg Pace     0.669954
-Best Pace    0.333805
-Avg HR       0.660000
-Max HR       0.500000
-Avg Power    0.753165
-Max Power    0.562112
-Name: 71, dtype: float64 assigned to cluster 6
-Point: Time         0.740372
-Distance     0.741168
-Avg Pace     0.468222
-Best Pace    0.767251
-Avg HR       0.540000
-Max HR       0.672414
-Avg Power    0.398734
-Max Power    0.661491
-Name: 72, dtype: float64 assigned to cluster 1
-Point: Time         0.705933
-Distance     0.633742
-Avg Pace     0.230212
-Best Pace    0.518986
-Avg HR       0.180000
-Max HR       0.362069
-Avg Power    0.234177
-Max Power    0.326087
-Name: 73, dtype: float64 assigned to cluster 0
-Point: Time         0.352364
-Distance     0.308580
-Avg Pace     0.169038
-Best Pace    0.034033
-Avg HR       0.520000
-Max HR       0.379310
-Avg Power    0.183544
-Max Power    0.083851
-Name: 74, dtype: float64 assigned to cluster 2
-Point: Time         0.130044
-Distance     0.134102
-Avg Pace     0.399491
-Best Pace    0.357614
-Avg HR       0.140000
-Max HR       0.431034
-Avg Power    0.392405
-Max Power    0.350932
-Name: 75, dtype: float64 assigned to cluster 5
-Point: Time         0.341267
-Distance     0.307859
-Avg Pace     0.219777
-Best Pace    0.245895
-Avg HR       0.260000
-Max HR       0.362069
-Avg Power    0.272152
-Max Power    0.586957
-Name: 76, dtype: float64 assigned to cluster 4
-Point: Time         0.528766
-Distance     0.524153
-Avg Pace     0.430249
-Best Pace    0.807906
-Avg HR       0.580000
-Max HR       0.637931
-Avg Power    0.417722
-Max Power    0.686335
-Name: 77, dtype: float64 assigned to cluster 1
-Point: Time         0.661737
-Distance     0.602019
-Avg Pace     0.256738
-Best Pace    0.129154
-Avg HR       0.460000
-Max HR       0.413793
-Avg Power    0.284810
-Max Power    0.472050
-Name: 78, dtype: float64 assigned to cluster 0
-Point: Time         0.323665
-Distance     0.300649
-Avg Pace     0.272960
-Best Pace    0.186749
-Avg HR       0.360000
-Max HR       0.396552
-Avg Power    0.316456
-Max Power    0.214286
-Name: 79, dtype: float64 assigned to cluster 4
-Point: Time         0.661163
-Distance     0.669070
-Avg Pace     0.487659
-Best Pace    0.600614
-Avg HR       0.700000
-Max HR       0.793103
-Avg Power    0.424051
-Max Power    0.484472
-Name: 80, dtype: float64 assigned to cluster 1
-Point: Time         0.711290
-Distance     0.671954
-Avg Pace     0.334503
-Best Pace    0.698289
-Avg HR       0.300000
-Max HR       0.258621
-Avg Power    0.373418
-Max Power    0.655280
-Name: 81, dtype: float64 assigned to cluster 1
-Point: Time         0.905294
-Distance     0.959625
-Avg Pace     0.611066
-Best Pace    0.292860
-Avg HR       0.580000
-Max HR       0.500000
-Avg Power    0.670886
-Max Power    0.478261
-Name: 82, dtype: float64 assigned to cluster 3
-Point: Time         0.309124
-Distance     0.281182
-Avg Pace     0.235467
-Best Pace    0.054881
-Avg HR       0.380000
-Max HR       0.327586
-Avg Power    0.253165
-Max Power    0.326087
-Name: 83, dtype: float64 assigned to cluster 4
-Point: Time         0.286739
-Distance     0.312185
-Avg Pace     0.596750
-Best Pace    0.483905
-Avg HR       0.660000
-Max HR       0.689655
-Avg Power    0.468354
-Max Power    0.307453
-Name: 84, dtype: float64 assigned to cluster 5
-Point: Time         0.688905
-Distance     0.741168
-Avg Pace     0.632841
-Best Pace    0.543253
-Avg HR       0.640000
-Max HR       0.724138
-Avg Power    0.563291
-Max Power    0.375776
-Name: 85, dtype: float64 assigned to cluster 3
-Point: Time         0.752808
-Distance     0.709445
-Avg Pace     0.328770
-Best Pace    0.292860
-Avg HR       0.360000
-Max HR       0.482759
-Avg Power    0.379747
-Max Power    0.391304
-Name: 86, dtype: float64 assigned to cluster 0
-Point: Time         0.670346
-Distance     0.616438
-Avg Pace     0.278420
-Best Pace    0.150135
-Avg HR       0.280000
-Max HR       0.310345
-Avg Power    0.335443
-Max Power    0.596273
-Name: 87, dtype: float64 assigned to cluster 0
-Point: Time         0.321752
-Distance     0.309301
-Avg Pace     0.346055
-Best Pace    0.079671
-Avg HR       0.500000
-Max HR       0.482759
-Avg Power    0.430380
-Max Power    0.329193
-Name: 88, dtype: float64 assigned to cluster 2
-Point: Time         0.679339
-Distance     0.706561
-Avg Pace     0.554732
-Best Pace    0.613911
-Avg HR       0.680000
-Max HR       0.775862
-Avg Power    0.544304
-Max Power    0.739130
-Name: 89, dtype: float64 assigned to cluster 1
-Point: Time         0.698663
-Distance     0.669070
-Avg Pace     0.363599
-Best Pace    0.423400
-Avg HR       0.420000
-Max HR       0.344828
-Avg Power    0.436709
-Max Power    0.618012
-Name: 90, dtype: float64 assigned to cluster 0
-Point: Time         0.912373
-Distance     1.000000
-Avg Pace     0.692731
-Best Pace    0.439437
-Avg HR       0.820000
-Max HR       0.706897
-Avg Power    0.803797
-Max Power    0.624224
-Name: 91, dtype: float64 assigned to cluster 3
-Point: Time         0.643561
-Distance     0.617880
-Avg Pace     0.369506
-Best Pace    0.237695
-Avg HR       0.400000
-Max HR       0.327586
-Avg Power    0.430380
-Max Power    0.208075
-Name: 92, dtype: float64 assigned to cluster 4
-Point: Time         0.640117
-Distance     0.669791
-Avg Pace     0.561640
-Best Pace    0.306245
-Avg HR       0.620000
-Max HR       0.568966
-Avg Power    0.620253
-Max Power    0.422360
-Name: 93, dtype: float64 assigned to cluster 3
-Point: Time         0.734823
-Distance     0.670512
-Avg Pace     0.262119
-Best Pace    0.876780
-Avg HR       0.320000
-Max HR       0.362069
-Avg Power    0.329114
-Max Power    0.925466
-Name: 94, dtype: float64 assigned to cluster 1
-Point: Time         0.524939
-Distance     0.452055
-Avg Pace     0.144534
-Best Pace    0.031117
-Avg HR       0.240000
-Max HR       0.241379
-Avg Power    0.151899
-Max Power    0.313665
-Name: 95, dtype: float64 assigned to cluster 4
-Point: Time         0.608357
-Distance     0.652487
-Avg Pace     0.618284
-Best Pace    0.428708
-Avg HR       0.600000
-Max HR       0.672414
-Avg Power    0.563291
-Max Power    0.298137
-Name: 96, dtype: float64 assigned to cluster 3
-Point: Time         0.630742
-Distance     0.655371
-Avg Pace     0.547862
-Best Pace    0.412894
-Avg HR       0.540000
-Max HR       0.568966
-Avg Power    0.512658
-Max Power    0.273292
-Name: 97, dtype: float64 assigned to cluster 3
-Point: Time         0.662311
-Distance     0.633021
-Avg Pace     0.357722
-Best Pace    0.903911
-Avg HR       0.440000
-Max HR       0.500000
-Avg Power    0.405063
-Max Power    0.813665
-Name: 98, dtype: float64 assigned to cluster 1
-Point: Time         0.593434
-Distance     0.532805
-Avg Pace     0.224982
-Best Pace    0.031117
-Avg HR       0.320000
-Max HR       0.362069
-Avg Power    0.278481
-Max Power    0.307453
-Name: 99, dtype: float64 assigned to cluster 0
-Point: Time         0.954847
-Distance     0.957462
-Avg Pace     0.474667
-Best Pace    0.250032
-Avg HR       0.720000
-Max HR       0.689655
-Avg Power    0.525316
-Max Power    0.409938
-Name: 100, dtype: float64 assigned to cluster 3
-Point: Time         0.313525
-Distance     0.302812
-Avg Pace     0.351873
-Best Pace    0.179255
-Avg HR       0.560000
-Max HR       0.517241
-Avg Power    0.392405
-Max Power    0.357143
-Name: 101, dtype: float64 assigned to cluster 2
-Point: Time         0.670155
-Distance     0.641673
-Avg Pace     0.363599
-Best Pace    0.225582
-Avg HR       0.540000
-Max HR       0.517241
-Avg Power    0.443038
-Max Power    0.360248
-Name: 102, dtype: float64 assigned to cluster 0
-Point: Time         0.725831
-Distance     0.677001
-Avg Pace     0.306119
-Best Pace    0.418129
-Avg HR       0.440000
-Max HR       0.551724
-Avg Power    0.373418
-Max Power    0.698758
-Name: 103, dtype: float64 assigned to cluster 0
-Point: Time         0.479786
-Distance     0.415285
-Avg Pace     0.154269
-Best Pace    0.198157
-Avg HR       0.260000
-Max HR       0.310345
-Avg Power    0.189873
-Max Power    0.229814
-Name: 104, dtype: float64 assigned to cluster 4
-Point: Time         0.674938
-Distance     0.683490
-Avg Pace     0.487659
-Best Pace    0.613911
-Avg HR       0.600000
-Max HR       0.655172
-Avg Power    0.405063
-Max Power    0.478261
-Name: 105, dtype: float64 assigned to cluster 1
-Point: Time         0.580041
-Distance     0.617880
-Avg Pace     0.603888
-Best Pace    0.428708
-Avg HR       0.640000
-Max HR       0.689655
-Avg Power    0.525316
-Max Power    0.291925
-Name: 106, dtype: float64 assigned to cluster 3
-Point: Time         0.631316
-Distance     0.597693
-Avg Pace     0.340264
-Best Pace    0.922417
-Avg HR       0.360000
-Max HR       0.465517
-Avg Power    0.360759
-Max Power    0.801242
-Name: 107, dtype: float64 assigned to cluster 1
-Point: Time         0.556125
-Distance     0.513338
-Avg Pace     0.278420
-Best Pace    0.153702
-Avg HR       0.480000
-Max HR       0.448276
-Avg Power    0.335443
-Max Power    0.344720
-Name: 108, dtype: float64 assigned to cluster 0
-Point: Time         0.981824
-Distance     0.993511
-Avg Pace     0.500789
-Best Pace    0.258385
-Avg HR       0.680000
-Max HR       0.655172
-Avg Power    0.563291
-Max Power    0.509317
-Name: 109, dtype: float64 assigned to cluster 3
-Point: Time         0.704020
-Distance     0.740447
-Avg Pace     0.582591
-Best Pace    0.347996
-Avg HR       0.780000
-Max HR       0.758621
-Avg Power    0.588608
-Max Power    0.413043
-Name: 110, dtype: float64 assigned to cluster 3
-Point: Time         0.723152
-Distance     0.669791
-Avg Pace     0.294958
-Best Pace    0.139556
-Avg HR       0.320000
-Max HR       0.379310
-Avg Power    0.316456
-Max Power    0.409938
-Name: 111, dtype: float64 assigned to cluster 0
-Point: Time         0.477108
-Distance     0.413843
-Avg Pace     0.154269
-Best Pace    0.051856
-Avg HR       0.260000
-Max HR       0.224138
-Avg Power    0.170886
-Max Power    0.236025
-Name: 112, dtype: float64 assigned to cluster 4
-Point: Time         0.563013
-Distance     0.561644
-Avg Pace     0.449088
-Best Pace    0.495428
-Avg HR       0.480000
-Max HR       0.482759
-Avg Power    0.424051
-Max Power    0.425466
-Name: 113, dtype: float64 assigned to cluster 1
-Point: Time         0.535462
-Distance     0.566691
-Avg Pace     0.575569
-Best Pace    0.377240
-Avg HR       0.620000
-Max HR       0.637931
-Avg Power    0.531646
-Max Power    0.338509
-Name: 114, dtype: float64 assigned to cluster 3
-Point: Time         0.616584
-Distance     0.534247
-Avg Pace     0.154269
-Best Pace    0.537118
-Avg HR       0.280000
-Max HR       0.379310
-Avg Power    0.164557
-Max Power    0.350932
-Name: 115, dtype: float64 assigned to cluster 0
-Point: Time         0.878508
-Distance     0.956741
-Avg Pace     0.677503
-Best Pace    0.367361
-Avg HR       0.780000
-Max HR       0.586207
-Avg Power    0.702532
-Max Power    0.481366
-Name: 116, dtype: float64 assigned to cluster 3
-Point: Time         0.058297
-Distance     0.058399
-Avg Pace     0.256738
-Best Pace    0.064054
-Avg HR       0.560000
-Max HR       0.362069
-Avg Power    0.373418
-Max Power    0.195652
-Name: 117, dtype: float64 assigned to cluster 2
-Point: Time         0.430233
-Distance     0.524874
-Avg Pace     0.916761
-Best Pace    0.407695
-Avg HR       0.880000
-Max HR       0.672414
-Avg Power    0.873418
-Max Power    0.431677
-Name: 118, dtype: float64 assigned to cluster 6
-Point: Time         0.094266
-Distance     0.093006
-Avg Pace     0.294958
-Best Pace    0.160898
-Avg HR       0.320000
-Max HR       0.155172
-Avg Power    0.272152
-Max Power    0.062112
-Name: 119, dtype: float64 assigned to cluster 2
-Point: Time         0.584633
-Distance     0.558760
-Avg Pace     0.357722
-Best Pace    0.568260
-Avg HR       0.500000
-Max HR       0.396552
-Avg Power    0.398734
-Max Power    0.503106
-Name: 120, dtype: float64 assigned to cluster 1
-Point: Time         0.314481
-Distance     0.308580
-Avg Pace     0.381409
-Best Pace    0.245895
-Avg HR       0.400000
-Max HR       0.327586
-Avg Power    0.417722
-Max Power    0.465839
-Name: 121, dtype: float64 assigned to cluster 5
-Point: Time         0.610844
-Distance     0.524874
-Avg Pace     0.139700
-Best Pace    0.367361
-Avg HR       0.180000
-Max HR       0.189655
-Avg Power    0.170886
-Max Power    0.335404
-Name: 122, dtype: float64 assigned to cluster 0
-Point: Time         0.785524
-Distance     0.813987
-Avg Pace     0.547862
-Best Pace    1.000000
-Avg HR       0.580000
-Max HR       0.724138
-Avg Power    0.569620
-Max Power    0.869565
-Name: 123, dtype: float64 assigned to cluster 1
-Point: Time         0.530488
-Distance     0.518385
-Avg Pace     0.399491
-Best Pace    0.245895
-Avg HR       0.600000
-Max HR       0.551724
-Avg Power    0.468354
-Max Power    0.503106
-Name: 124, dtype: float64 assigned to cluster 3
-Point: Time         0.839861
-Distance     0.885364
-Avg Pace     0.589651
-Best Pace    0.288454
-Avg HR       0.860000
-Max HR       0.758621
-Avg Power    0.645570
-Max Power    0.459627
-Name: 125, dtype: float64 assigned to cluster 3
-Point: Time         0.703828
-Distance     0.677722
-Avg Pace     0.375442
-Best Pace    0.250032
-Avg HR       0.660000
-Max HR       0.603448
-Avg Power    0.443038
-Max Power    0.487578
-Name: 126, dtype: float64 assigned to cluster 3
-Point: Time         0.362695
-Distance     0.344629
-Avg Pace     0.323065
-Best Pace    0.217628
-Avg HR       0.460000
-Max HR       0.431034
-Avg Power    0.386076
-Max Power    0.381988
-Name: 127, dtype: float64 assigned to cluster 2
-Point: Time         0.652936
-Distance     0.651766
-Avg Pace     0.455432
-Best Pace    0.245895
-Avg HR       0.640000
-Max HR       0.603448
-Avg Power    0.512658
-Max Power    0.496894
-Name: 128, dtype: float64 assigned to cluster 3
-Point: Time         0.788012
-Distance     0.674838
-Avg Pace     0.134887
-Best Pace    0.489646
-Avg HR       0.280000
-Max HR       0.413793
-Avg Power    0.139241
-Max Power    0.406832
-Name: 129, dtype: float64 assigned to cluster 0
-Point: Time         0.565500
-Distance     0.524874
-Avg Pace     0.289419
-Best Pace    0.129154
-Avg HR       0.360000
-Max HR       0.379310
-Avg Power    0.335443
-Max Power    0.459627
-Name: 130, dtype: float64 assigned to cluster 0
-Point: Time         0.626342
-Distance     0.643115
-Avg Pace     0.520747
-Best Pace    0.439437
-Avg HR       0.560000
-Max HR       0.620690
-Avg Power    0.487342
-Max Power    0.254658
-Name: 131, dtype: float64 assigned to cluster 3
-Point: Time         0.244456
-Distance     0.237203
-Avg Pace     0.340264
-Best Pace    0.347996
-Avg HR       0.440000
-Max HR       0.362069
-Avg Power    0.392405
-Max Power    0.413043
-Name: 132, dtype: float64 assigned to cluster 2
-Point: Time         0.809823
-Distance     0.813266
-Avg Pace     0.474667
-Best Pace    0.202005
-Avg HR       0.840000
-Max HR       0.637931
-Avg Power    0.556962
-Max Power    0.624224
-Name: 133, dtype: float64 assigned to cluster 3
-Point: Time         0.653510
-Distance     0.672675
-Avg Pace     0.527471
-Best Pace    0.555662
-Avg HR       0.700000
-Max HR       0.706897
-Avg Power    0.506329
-Max Power    0.863354
-Name: 134, dtype: float64 assigned to cluster 1
-Point: Time         0.527044
-Distance     0.502523
-Avg Pace     0.346055
-Best Pace    0.655083
-Avg HR       0.380000
-Max HR       0.431034
-Avg Power    0.386076
-Max Power    0.565217
-Name: 135, dtype: float64 assigned to cluster 1
-Point: Time         0.642030
-Distance     0.544340
-Avg Pace     0.115854
-Best Pace    0.164527
-Avg HR       0.400000
-Max HR       0.413793
-Avg Power    0.120253
-Max Power    0.173913
-Name: 136, dtype: float64 assigned to cluster 0
-Point: Time         0.554212
-Distance     0.591204
-Avg Pace     0.603888
-Best Pace    0.279728
-Avg HR       0.780000
-Max HR       0.706897
-Avg Power    0.626582
-Max Power    0.425466
-Name: 137, dtype: float64 assigned to cluster 3
-Point: Time         0.643370
-Distance     0.608508
-Avg Pace     0.334503
-Best Pace    0.783303
-Avg HR       0.420000
-Max HR       0.396552
-Avg Power    0.360759
-Max Power    0.624224
-Name: 138, dtype: float64 assigned to cluster 1
-Point: Time         0.813075
-Distance     0.815429
-Avg Pace     0.474667
-Best Pace    0.507121
-Avg HR       0.720000
-Max HR       0.620690
-Avg Power    0.569620
-Max Power    0.552795
-Name: 139, dtype: float64 assigned to cluster 3
-Point: Time         0.712247
-Distance     0.741168
-Avg Pace     0.554732
-Best Pace    0.343234
-Avg HR       0.720000
-Max HR       0.706897
-Avg Power    0.601266
-Max Power    0.571429
-Name: 140, dtype: float64 assigned to cluster 3
-Point: Time         0.680487
-Distance     0.581110
-Avg Pace     0.130097
-Best Pace    0.092471
-Avg HR       0.500000
-Max HR       0.551724
-Avg Power    0.145570
-Max Power    0.260870
-Name: 141, dtype: float64 assigned to cluster 0
-Point: Time         0.582146
-Distance     0.599135
-Avg Pace     0.520747
-Best Pace    0.288454
-Avg HR       0.600000
-Max HR       0.534483
-Avg Power    0.582278
-Max Power    0.444099
-Name: 142, dtype: float64 assigned to cluster 3
-Point: Time         0.608548
-Distance     0.596972
-Avg Pace     0.411700
-Best Pace    0.472548
-Avg HR       0.540000
-Max HR       0.431034
-Avg Power    0.493671
-Max Power    0.524845
-Name: 143, dtype: float64 assigned to cluster 1
-Point: Time         0.523791
-Distance     0.560923
-Avg Pace     0.603888
-Best Pace    0.434054
-Avg HR       0.680000
-Max HR       0.620690
-Avg Power    0.696203
-Max Power    0.630435
-Name: 144, dtype: float64 assigned to cluster 6
+Point: [0.35307964 0.02657039 0.1191592 ] assigned to cluster 1
+Point: [-0.22510138 -0.39388704 -0.04447229] assigned to cluster 8
+Point: [0.53639763 0.04784155 0.05333928] assigned to cluster 1
+Point: [-0.49213583  0.43984299 -0.19578429] assigned to cluster 0
+Point: [-0.13074576 -0.06765174  0.05528111] assigned to cluster 6
+Point: [ 0.23285314 -0.31479323 -0.12689624] assigned to cluster 4
+Point: [0.49436648 0.07768243 0.09291396] assigned to cluster 1
+Point: [-0.69057071  0.20883378 -0.49753572] assigned to cluster 0
+Point: [ 0.13901828 -0.23413803 -0.22290896] assigned to cluster 4
+Point: [-0.57273098 -0.18985329  0.08633587] assigned to cluster 8
+Point: [0.45356575 0.133119   0.05853553] assigned to cluster 1
+Point: [ 0.92315455 -0.01098688 -0.07611417] assigned to cluster 1
+Point: [0.32219523 0.45565747 0.17018391] assigned to cluster 7
+Point: [0.82874999 0.27490635 0.09896391] assigned to cluster 1
+Point: [0.43359695 0.01582135 0.03210458] assigned to cluster 1
+Point: [ 0.15993887 -0.03682912  0.07568284] assigned to cluster 1
+Point: [0.53420737 0.03120323 0.14515971] assigned to cluster 1
+Point: [-0.19727191  0.46802497 -0.24609445] assigned to cluster 0
+Point: [ 0.04035282 -0.22515221  0.0501569 ] assigned to cluster 4
+Point: [-0.42306886  0.30196297 -0.09530945] assigned to cluster 0
+Point: [ 0.38902289  0.14642185 -0.24393184] assigned to cluster 1
+Point: [-0.20522045 -0.40588014 -0.02396393] assigned to cluster 8
+Point: [ 0.50409809  0.09951482 -0.00363132] assigned to cluster 1
+Point: [-0.71760258  0.27726467  0.1260942 ] assigned to cluster 0
+Point: [-0.28887081  0.14465721 -0.13812855] assigned to cluster 0
+Point: [ 0.13522054 -0.24178444 -0.11490856] assigned to cluster 4
+Point: [ 0.56123882 -0.07124026 -0.04431967] assigned to cluster 1
+Point: [-0.37509448  0.17523068 -0.25590952] assigned to cluster 0
+Point: [-0.27697264  0.14001842 -0.14529802] assigned to cluster 0
+Point: [-0.53561573 -0.39626019  0.12014145] assigned to cluster 8
+Point: [ 0.50026817 -0.17145664 -0.10496718] assigned to cluster 4
+Point: [0.04685429 0.21754513 0.44951901] assigned to cluster 7
+Point: [0.82162834 0.11697171 0.03432141] assigned to cluster 1
+Point: [-0.55266236  0.39805999  0.76111467] assigned to cluster 5
+Point: [0.73347933 0.16346944 0.08738336] assigned to cluster 1
+Point: [ 0.37970573 -0.38494757 -0.22984393] assigned to cluster 4
+Point: [-0.04839594 -0.25682323 -0.01005996] assigned to cluster 4
+Point: [-0.02623056  0.38728596  0.16572301] assigned to cluster 7
+Point: [-0.44974674  0.0140212   0.05997169] assigned to cluster 0
+Point: [ 0.12128515 -0.08834068 -0.20422069] assigned to cluster 4
+Point: [-0.60838068 -0.30606641  0.0723769 ] assigned to cluster 8
+Point: [ 0.83195969  0.05896507 -0.04590343] assigned to cluster 1
+Point: [0.11564378 0.70905439 0.0588992 ] assigned to cluster 7
+Point: [ 0.80812141  0.33639356 -0.13431799] assigned to cluster 1
+Point: [0.32543945 0.0573434  0.16610182] assigned to cluster 1
+Point: [ 0.31413789 -0.31353128  0.10574783] assigned to cluster 4
+Point: [ 0.57277124  0.08754339 -0.12574579] assigned to cluster 1
+Point: [-0.15067041  0.19850118 -0.03299373] assigned to cluster 0
+Point: [-0.00704944 -0.16976823 -0.02477926] assigned to cluster 4
+Point: [-0.13495042 -0.3976992  -0.17684777] assigned to cluster 8
+Point: [ 0.48550482 -0.10741395  0.03516834] assigned to cluster 1
+Point: [0.56536298 0.04204259 0.05024889] assigned to cluster 1
+Point: [-0.52208148  0.24031364 -0.00933064] assigned to cluster 0
+Point: [-0.41015598  0.31836235 -0.27551275] assigned to cluster 0
+Point: [-0.36310647 -0.1351467  -0.15665911] assigned to cluster 0
+Point: [ 0.72401195 -0.07957657 -0.2091738 ] assigned to cluster 1
+Point: [-0.36796782 -0.07135293  0.26910852] assigned to cluster 6
+Point: [-0.15803919  0.04073899 -0.47466657] assigned to cluster 0
+Point: [-0.3325734  -0.55396121 -0.10771418] assigned to cluster 8
+Point: [ 0.47889825  0.12926455 -0.0940302 ] assigned to cluster 1
+Point: [0.28264477 0.57671448 0.01847795] assigned to cluster 7
+Point: [0.23267623 0.19037198 0.04774736] assigned to cluster 1
+Point: [-0.30518282  0.52124549 -0.08038906] assigned to cluster 0
+Point: [ 0.23393271 -0.22334122 -0.05360266] assigned to cluster 4
+Point: [ 0.51904279 -0.05754183  0.00467952] assigned to cluster 1
+Point: [-0.58801158  0.51933752 -0.10106608] assigned to cluster 0
+Point: [-0.22842299  0.20715876 -0.32328717] assigned to cluster 0
+Point: [ 0.45915475 -0.09026976 -0.19494449] assigned to cluster 1
+Point: [-0.33990406 -0.46835344 -0.1103585 ] assigned to cluster 8
+Point: [-0.08021637  0.33862064  0.22660328] assigned to cluster 7
+Point: [-0.56785455  0.47601269 -0.02997641] assigned to cluster 0
+Point: [-0.2825342   0.2131612  -0.16517027] assigned to cluster 0
+Point: [-0.11110556 -0.29968059 -0.14449669] assigned to cluster 4
+Point: [0.00179849 0.24587079 0.50902517] assigned to cluster 7
+Point: [-0.51878223  0.15957496 -0.13624215] assigned to cluster 0
+Point: [-0.0183353  -0.0664042  -0.31647038] assigned to cluster 0
+Point: [ 0.60202049 -0.14411606  0.0210779 ] assigned to cluster 1
+Point: [0.43906917 0.34961642 0.17750249] assigned to cluster 1
+Point: [ 0.30901445  0.16826828 -0.0891126 ] assigned to cluster 1
+Point: [-0.33931052  0.39261102 -0.05956101] assigned to cluster 0
+Point: [ 0.08317502 -0.23594351 -0.11978096] assigned to cluster 4
+Point: [0.44677001 0.01660243 0.07541805] assigned to cluster 1
+Point: [-0.35544999  0.06909823  0.05250888] assigned to cluster 0
+Point: [-0.29759342  0.12949071 -0.30386617] assigned to cluster 0
+Point: [-0.49544447 -0.41352253  0.13665948] assigned to cluster 8
+Point: [ 0.51738357 -0.01868853  0.03315484] assigned to cluster 1
+Point: [0.08008938 0.27392725 0.34983667] assigned to cluster 7
+Point: [-0.39456094 -0.05833552  0.1983924 ] assigned to cluster 6
+Point: [-0.1010474  -0.24686767 -0.1066568 ] assigned to cluster 4
+Point: [ 0.03070033 -0.19833965 -0.1615807 ] assigned to cluster 4
+Point: [ 0.37086241 -0.01610023  0.22553139] assigned to cluster 1
+Point: [-0.52833778  0.1329143   0.08780951] assigned to cluster 0
+Point: [-0.20412406 -0.05215449 -0.12938243] assigned to cluster 0
+Point: [-0.75318365 -0.28255831  0.25806654] assigned to cluster 8
+Point: [ 0.08704401 -0.26180951  0.01406742] assigned to cluster 4
+Point: [-0.21371373 -0.15579943  0.24147651] assigned to cluster 6
+Point: [-0.47829107  0.33335485 -0.44702954] assigned to cluster 0
+Point: [ 0.43433604 -0.22452504 -0.19901702] assigned to cluster 4
+Point: [-0.21907381 -0.08282594  0.25979129] assigned to cluster 6
+Point: [-0.15659145 -0.11997786  0.16440549] assigned to cluster 6
+Point: [-0.48025271  0.37341093 -0.26513351] assigned to cluster 0
+Point: [ 0.28356888 -0.29315607 -0.08217707] assigned to cluster 4
+Point: [-0.4425555  -0.47282881  0.05246815] assigned to cluster 8
+Point: [0.31946335 0.06900283 0.19464651] assigned to cluster 1
+Point: [-0.0366857  -0.23113843  0.04293944] assigned to cluster 4
+Point: [-0.2567765  -0.02963811 -0.1711965 ] assigned to cluster 0
+Point: [ 0.40207029 -0.10191567 -0.1661688 ] assigned to cluster 4
+Point: [-0.33318547  0.05458578 -0.01156367] assigned to cluster 0
+Point: [-0.18028048 -0.05303524  0.2563824 ] assigned to cluster 6
+Point: [-0.42430796  0.41259151 -0.30551473] assigned to cluster 0
+Point: [ 0.1823201  -0.17025611 -0.00560062] assigned to cluster 4
+Point: [-0.52042461 -0.46660062  0.03978699] assigned to cluster 8
+Point: [-0.33732328 -0.18164579  0.25685067] assigned to cluster 6
+Point: [ 0.04078055 -0.31265234 -0.13247926] assigned to cluster 4
+Point: [ 0.48804518 -0.19836018 -0.15438089] assigned to cluster 4
+Point: [-0.10433236  0.05727291  0.0223638 ] assigned to cluster 0
+Point: [-0.11284597 -0.03009843  0.25965656] assigned to cluster 6
+Point: [ 0.07969299  0.04442911 -0.34180004] assigned to cluster 0
+Point: [-0.57532628 -0.34511139  0.22526345] assigned to cluster 8
+Point: [0.72320417 0.16349948 0.28295342] assigned to cluster 1
+Point: [-0.30549103  0.08514479  0.69327883] assigned to cluster 5
+Point: [0.77066351 0.14185268 0.14688668] assigned to cluster 1
+Point: [-0.12675337  0.11419551 -0.0962002 ] assigned to cluster 0
+Point: [0.27918727 0.13403652 0.12145941] assigned to cluster 1
+Point: [ 0.21466542 -0.07732139 -0.34771476] assigned to cluster 0
+Point: [-0.83478373  0.32355605 -0.10975205] assigned to cluster 0
+Point: [ 0.08951663 -0.46145562  0.04389697] assigned to cluster 4
+Point: [-0.00684824 -0.04329317  0.12630998] assigned to cluster 6
+Point: [-0.48030603 -0.34080742  0.24518573] assigned to cluster 8
+Point: [-0.15684874 -0.20002933  0.03919153] assigned to cluster 8
+Point: [0.28521421 0.05369448 0.10499096] assigned to cluster 1
+Point: [-0.16258326 -0.16367333  0.13767302] assigned to cluster 6
+Point: [-0.05794781 -0.11275712 -0.43350611] assigned to cluster 0
+Point: [ 0.15936652 -0.16065273 -0.0505927 ] assigned to cluster 4
+Point: [-0.15082846 -0.09735112  0.14914952] assigned to cluster 6
+Point: [0.32728383 0.25175423 0.11375513] assigned to cluster 1
+Point: [-0.37629725 -0.30108925  0.12236435] assigned to cluster 8
+Point: [-0.49263192  0.16105444  0.04843503] assigned to cluster 0
+Point: [-0.12745563  0.24953866 -0.1273969 ] assigned to cluster 0
+Point: [ 0.30286627 -0.27308583 -0.23657133] assigned to cluster 4
+Point: [ 0.38551569 -0.02510186  0.37929847] assigned to cluster 1
+Point: [-0.17979244 -0.08512775  0.36770029] assigned to cluster 6
+Point: [-0.29569299  0.24571739 -0.24987949] assigned to cluster 0
+Point: [-0.47839581 -0.12946382  0.03439044] assigned to cluster 8
+Point: [-0.37979035 -0.13999242  0.1997197 ] assigned to cluster 6
+Point: [ 0.22300945 -0.31850135 -0.18448316] assigned to cluster 4
+Point: [-0.12515406 -0.10089902  0.2195321 ] assigned to cluster 6
+Point: [-0.17029558  0.02899632  0.00757803] assigned to cluster 0
