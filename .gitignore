@@ -8,5 +8,10 @@
 *.out
 *.bbl
 *.blg
+*.tex
+*.bib
 
 __pycache__
+.DS_Store
+
+Proposal/*.png
