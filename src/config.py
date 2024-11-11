@@ -1,3 +1,4 @@
 class Config:
     DEBUG = True
-    OUTPUT_SUFFIX = "_2"
+    USE_SKLEARN = False
+    OUTPUT_SUFFIX = "_3"

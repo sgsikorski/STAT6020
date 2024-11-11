@@ -18,7 +18,7 @@ np.random.seed(0)
 # Use sklearn's DPMM implementation
 def getSklDPMM(alpha):
     model = BayesianGaussianMixture(
-        n_components=10,  # Upper limit on number of components
+        n_components=50,  # Upper limit on number of components
         covariance_type="full",
         weight_concentration_prior_type="dirichlet_process",  # Enable Dirichlet Process behavior
         weight_concentration_prior=alpha,  # Control sparsity of the mixture
@@ -32,34 +32,52 @@ def reduceClusters(data, n_components=2):
     return reduced_data
 
 
+def printToFile(data, assignments):
+    p = f"res/{'sk/' if Config.USE_SKLEARN else ''}sklearn_cluster_assignments{Config.OUTPUT_SUFFIX}.txt"
+    with open(
+        p,
+        "w+",
+    ) as f:
+        for i, (_, d) in enumerate(data.iterrows()):
+            f.write(f"Point: {d} assigned to cluster {assignments[i]}\n")
+            print(f"Point: {d} assigned to cluster {assignments[i]}")
+
+
 def main():
     global DEBUG
     if "-d" in sys.argv:
         DEBUG = True
-    dpmm = DPMM(alpha=1)
+    dpmm = DPMM(alpha=0.001)
     dpmm.initializeData()
 
-    skDPMM = getSklDPMM(10)
     data = dpmm.preprocessData()
     fullData = data
     data = reduceClusters(data, n_components=3)
-    skDPMM.fit(data)
 
-    assignments = skDPMM.predict(data)
-    print(assignments)
-    plotClusters2d(data, assignments)
-    plotClusters3d(data, assignments)
-    plotParallelCoordinates(
-        pd.DataFrame(fullData, columns=fullData.columns), assignments
-    )
+    if Config.USE_SKLEARN:
+        skDPMM = getSklDPMM(10)
+        skDPMM.fit(data)
+        skAssignments = skDPMM.predict(data)
+        print(skAssignments)
+        plotClusters2d(reduceClusters(data, n_components=2), skAssignments)
+        plotClusters3d(data, skAssignments)
+        plotParallelCoordinates(
+            pd.DataFrame(fullData, columns=fullData.columns), skAssignments
+        )
 
-    if Config.DEBUG:
-        pointToAssign = defaultdict(list)
-        with open(f"res/cluster_assignments{Config.OUTPUT_SUFFIX}.txt", "w+") as f:
-            for i, (_, d) in enumerate(fullData.iterrows()):
-                pointToAssign[assignments[i]].append(d)
-                f.write(f"Point: {d} assigned to cluster {assignments[i]}\n")
-                print(f"Point: {d} assigned to cluster {assignments[i]}")
+        if Config.DEBUG:
+            printToFile(fullData, skAssignments)
+    else:
+        assignments = dpmm.fit()
+        print(assignments)
+        plotClusters2d(reduceClusters(data, n_components=2), assignments)
+        plotClusters3d(data, assignments)
+        plotParallelCoordinates(
+            pd.DataFrame(fullData, columns=fullData.columns), assignments
+        )
+
+        if Config.DEBUG:
+            printToFile(fullData, assignments)
 
 
 if __name__ == "__main__":
