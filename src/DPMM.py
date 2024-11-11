@@ -1,4 +1,4 @@
-from scipy.stats import wishart, multivariate_normal
+from scipy.stats import invwishart, multivariate_normal, wishart
 from sklearn.preprocessing import MinMaxScaler
 import numpy as np
 import pandas as pd
@@ -29,9 +29,6 @@ class DPMM:
 
     def initializeData(self, dataset="src/Activities.csv"):
         self.data, self.labels = self.loadData(dataset)
-        self.mu = np.zeros(self.data.shape[1])
-        self.psi = np.eye(self.data.shape[1])
-        self.nu = self.data.shape[1] + 2
 
     def loadData(self, dataset):
         df = pd.read_csv(dataset)
@@ -75,7 +72,7 @@ class DPMM:
         # TODO: See how PCA prior to MinMax changes results
         # data = reduceClusters(df, 3)
 
-        scaler = MinMaxScaler()
+        scaler = MinMaxScaler(feature_range=(0, 1))
         scaledData = scaler.fit_transform(df)
         scaledDF = pd.DataFrame(scaledData, columns=df.columns)
 
@@ -83,19 +80,24 @@ class DPMM:
         return scaledDF
 
     def fit(self):
-        if not self.data:
+        if self.data.empty:
             self.initializeData()
+        self.mu = np.zeros(self.data.shape[1])
+        self.psi = np.eye(self.data.shape[1])
+        self.nu = self.data.shape[1] + 10
         N, D = self.data.shape
         assignments = np.zeros(N, dtype=int)
-        clusters = {0: [self.data[0]]}
+        # Map cluster to data point index
+        clusters = {0: [0]}
 
         samples = []
 
         for _ in range(self.iters):
             for n in range(N):
-                currP = self.data[n]
+                currP = self.data.iloc[n].values
                 currC = assignments[n]
-                clusters[currC].remove(currP)
+                if n in clusters[currC]:
+                    clusters[currC].remove(n)
                 if len(clusters[currC]) == 0:
                     del clusters[currC]
 
@@ -106,9 +108,11 @@ class DPMM:
                 options = list(clusters.keys())
 
                 for k in options:
-                    cluster_data = np.array(clusters[k])
+                    cluster_data = np.array(self.data.iloc[clusters[k]].values)
                     mu_k = np.mean(cluster_data, axis=0)
-                    cov_k = np.cov(cluster_data.T) + np.eye(D) * 1e-6
+                    cov_k = np.eye(D) * 5e-2
+                    if len(cluster_data) > 1:
+                        cov_k = np.cov(cluster_data, rowvar=False) + np.eye(D) * 1e-3
                     likelihood = multivariate_normal.pdf(currP, mean=mu_k, cov=cov_k)
 
                     # Prior: proportion of data already in cluster
@@ -116,13 +120,19 @@ class DPMM:
 
                     posteriorProbs.append(prior * likelihood)
 
-                # Adding the probability of forming a new cluster
-                sigma = wishart.rvs(df=self.nu, scale=self.psi)
-                newMu = np.random.multivariate_normal(self.mu, sigma / self._lambda)
-                newLikelihood = multivariate_normal.pdf(currP, mean=newMu, cov=sigma)
-
-                newClusterPrior = self.alpha / (totalP + self.alpha)
-                posteriorProbs.append(newClusterPrior * newLikelihood)
+                if len(clusters) < 20:
+                    # Add the probability of forming a new cluster
+                    sigma = wishart.rvs(df=self.nu, scale=self.psi)
+                    newMu = np.random.multivariate_normal(self.mu, sigma / self._lambda)
+                    newLikelihood = multivariate_normal.pdf(
+                        currP, mean=newMu, cov=sigma
+                    )
+                    newClusterPrior = self.alpha / (totalP + self.alpha)
+                    posteriorProbs.append(newClusterPrior * newLikelihood)
+                    new_cluster_possible = True
+                else:
+                    # If max clusters reached, skip new cluster option
+                    new_cluster_possible = False
 
                 # Normalize posterior probabilities
                 posteriorProbs = np.array(posteriorProbs)
@@ -132,13 +142,13 @@ class DPMM:
                 newCluster = np.random.choice(len(posteriorProbs), p=posteriorProbs)
 
                 # Assign the data point to the chosen cluster (either existing or new)
-                if newCluster == len(options):  # New cluster
-                    maxId = max(options) + 1
+                if new_cluster_possible and newCluster == len(options):  # New cluster
+                    maxId = max(options) + 1 if len(options) > 0 else 0
                     assignments[n] = maxId
-                    clusters[maxId] = [currP]
+                    clusters[maxId] = [n]
                 else:  # Existing cluster
                     assignments[n] = options[newCluster]
-                    clusters[options[newCluster]].append(currP)
+                    clusters[options[newCluster]].append(n)
 
             # Store cluster assignments
             samples.append(np.copy(assignments))
@@ -147,6 +157,10 @@ class DPMM:
                 print(f"Iteration {_ + 1} complete")
                 print(f"Number of Clusters: {len(clusters)}")
                 print(f"Cluster assignments: {assignments}")
+            # TODO: Add better convergence criterion
+            if len(clusters) <= 8:
+                return assignments
+        return assignments
 
     def evaluate(self):
         for sample in self.data.iterrows():

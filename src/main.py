@@ -29,7 +29,7 @@ def getSklDPMM(alpha):
 def reduceClusters(data, n_components=2):
     pca = PCA(n_components=n_components)
     reduced_data = pca.fit_transform(data)
-    return reduced_data
+    return pd.DataFrame(reduced_data, columns=[f"PC{i+1}" for i in range(n_components)])
 
 
 def printToFile(data, assignments):
@@ -47,7 +47,7 @@ def main():
     global DEBUG
     if "-d" in sys.argv:
         DEBUG = True
-    dpmm = DPMM(alpha=0.001)
+    dpmm = DPMM(alpha=25)
     dpmm.initializeData()
 
     data = dpmm.preprocessData()
@@ -68,10 +68,11 @@ def main():
         if Config.DEBUG:
             printToFile(fullData, skAssignments)
     else:
+        dpmm.data = data
         assignments = dpmm.fit()
         print(assignments)
-        plotClusters2d(reduceClusters(data, n_components=2), assignments)
-        plotClusters3d(data, assignments)
+        plotClusters2d(reduceClusters(data, n_components=2).values, assignments)
+        plotClusters3d(data.values, assignments)
         plotParallelCoordinates(
             pd.DataFrame(fullData, columns=fullData.columns), assignments
         )
