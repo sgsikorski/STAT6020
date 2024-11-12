@@ -14,6 +14,9 @@ Workout
     Possible types of workout?
 LR
 TR
+MLR
 TR w/ strides
 Recovery
 Speed work/strides?
+Race
+Shakeout

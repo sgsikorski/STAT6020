@@ -31,6 +31,8 @@ class DPMM:
             # "Max Run Cadence",
             # "Total Ascent"
         ]
+        self.clusters = {0: [0]}
+        self.idx = 0
 
     def initializeData(self, dataset="src/Activities.csv"):
         self.data, self.labels = self.loadData(dataset)
@@ -105,82 +107,91 @@ class DPMM:
         self.mu = np.zeros(self.data.shape[1])
         self.psi = np.eye(self.data.shape[1])
         self.nu = self.data.shape[1] + 10
-        N, D = self.data.shape
-        assignments = np.zeros(N, dtype=int)
-        # Map cluster to data point index
-        clusters = {0: [0]}
+        self.N, self.D = self.data.shape
+        self.assignments = np.zeros(self.N, dtype=int)
 
-        samples = []
-
+        # Start over if rerunning fit
+        if self.idx > 0:
+            self.idx = 0
+            self.clusters = {0: [0]}
         for _ in range(self.iters):
-            for n in range(N):
+            for n in range(self.N):
                 currP = self.data.iloc[n].values
-                currC = assignments[n]
-                if n in clusters[currC]:
-                    clusters[currC].remove(n)
-                if len(clusters[currC]) == 0:
-                    del clusters[currC]
+                currC = self.assignments[n]
+                if n in self.clusters[currC]:
+                    self.clusters[currC].remove(n)
+                if len(self.clusters[currC]) == 0:
+                    del self.clusters[currC]
 
-                sizes = {k: len(clusters[k]) for k in clusters}
-                totalP = sum(sizes.values())
-
-                posteriorProbs = []
-                options = list(clusters.keys())
-
-                for k in options:
-                    cluster_data = np.array(self.data.iloc[clusters[k]].values)
-                    mu_k = np.mean(cluster_data, axis=0)
-                    cov_k = np.eye(D) * 5e-2
-                    if len(cluster_data) > 1:
-                        cov_k = np.cov(cluster_data, rowvar=False) + np.eye(D) * 1e-3
-                    likelihood = multivariate_normal.pdf(currP, mean=mu_k, cov=cov_k)
-
-                    # Prior: proportion of data already in cluster
-                    prior = sizes[k] / (totalP + self.alpha)
-
-                    posteriorProbs.append(prior * likelihood)
-
-                if len(clusters) < 20:
-                    # Add the probability of forming a new cluster
-                    sigma = wishart.rvs(df=self.nu, scale=self.psi)
-                    newMu = np.random.multivariate_normal(self.mu, sigma / self._lambda)
-                    newLikelihood = multivariate_normal.pdf(
-                        currP, mean=newMu, cov=sigma
-                    )
-                    newClusterPrior = self.alpha / (totalP + self.alpha)
-                    posteriorProbs.append(newClusterPrior * newLikelihood)
-                    new_cluster_possible = True
-                else:
-                    # If max clusters reached, skip new cluster option
-                    new_cluster_possible = False
-
-                # Normalize posterior probabilities
-                posteriorProbs = np.array(posteriorProbs)
-                posteriorProbs /= posteriorProbs.sum()
-
-                # Sample new cluster assignment
-                newCluster = np.random.choice(len(posteriorProbs), p=posteriorProbs)
-
-                # Assign the data point to the chosen cluster (either existing or new)
-                if new_cluster_possible and newCluster == len(options):  # New cluster
-                    maxId = max(options) + 1 if len(options) > 0 else 0
-                    assignments[n] = maxId
-                    clusters[maxId] = [n]
-                else:  # Existing cluster
-                    assignments[n] = options[newCluster]
-                    clusters[options[newCluster]].append(n)
-
-            # Store cluster assignments
-            samples.append(np.copy(assignments))
+                self.predict(currP)
 
             if Config.DEBUG:
                 print(f"Iteration {_ + 1} complete")
-                print(f"Number of Clusters: {len(clusters)}")
-                print(f"Cluster assignments: {assignments}")
+                print(f"Number of Clusters: {len(self.clusters)}")
+                print(f"Cluster assignments: {self.assignments}")
             # TODO: Add better convergence criterion
-            if len(clusters) == 8:
-                return assignments
-        return assignments
+            if len(self.clusters) == 8:
+                break
+            self.idx = 0
+        return self.assignments
+
+    def addPoint(self, pointIdx, newCluster, new_cluster_possible):
+        options = list(self.clusters.keys())
+        if pointIdx >= len(self.assignments):
+            self.assignments = self.assignments.append(-1)
+        # Assign the data point to the chosen cluster (either existing or new)
+        if new_cluster_possible and newCluster == len(options):  # New cluster
+            maxId = max(options) + 1 if len(options) > 0 else 0
+            self.assignments[pointIdx] = maxId
+            self.clusters[maxId] = [pointIdx]
+        else:  # Existing cluster
+            self.assignments[pointIdx] = options[newCluster]
+            self.clusters[options[newCluster]].append(pointIdx)
+
+    def predict(self, sample):
+        sizes = {k: len(self.clusters[k]) for k in self.clusters}
+        totalP = sum(sizes.values())
+
+        posteriorProbs = []
+        options = list(self.clusters.keys())
+
+        for k in options:
+            cluster_data = np.array(self.data.iloc[self.clusters[k]].values)
+            mu_k = np.mean(cluster_data, axis=0)
+            cov_k = np.eye(self.D) * 5e-2
+            if len(cluster_data) > 1:
+                cov_k = np.cov(cluster_data, rowvar=False) + np.eye(self.D) * 1e-3
+            likelihood = multivariate_normal.pdf(sample, mean=mu_k, cov=cov_k)
+
+            # Prior: proportion of data already in cluster
+            prior = sizes[k] / (totalP + self.alpha)
+
+            posteriorProbs.append(prior * likelihood)
+
+        if len(self.clusters) < 20:
+            # Add the probability of forming a new cluster
+            sigma = wishart.rvs(df=self.nu, scale=self.psi)
+            newMu = np.random.multivariate_normal(self.mu, sigma / self._lambda)
+            newLikelihood = multivariate_normal.pdf(sample, mean=newMu, cov=sigma)
+            newClusterPrior = self.alpha / (totalP + self.alpha)
+            posteriorProbs.append(newClusterPrior * newLikelihood)
+            new_cluster_possible = True
+        else:
+            new_cluster_possible = False
+
+        # Normalize posterior probabilities
+        posteriorProbs = np.array(posteriorProbs)
+        posteriorProbs /= posteriorProbs.sum()
+
+        # Sample new cluster assignment
+        newCluster = np.random.choice(len(posteriorProbs), p=posteriorProbs)
+        self.addPoint(self.idx, newCluster, new_cluster_possible)
+        self.idx += 1
+        return newCluster, new_cluster_possible
+
+    def predictSamples(self, samples):
+        for sample in samples:
+            self.predict(sample)
 
     def transformLabels(self, labels):
         clusters = np.unique(labels)

@@ -8,7 +8,6 @@
             "console": "integratedTerminal",
             "args": [
                 "-d",
-                "--save",
             ]
         }
     ]
