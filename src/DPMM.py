@@ -1,8 +1,13 @@
 from scipy.stats import invwishart, multivariate_normal, wishart
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import adjusted_rand_score
+from sklearn.metrics import silhouette_score
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
+from scipy.optimize import linear_sum_assignment
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
+from typing import Literal
 
 from config import Config
 
@@ -32,8 +37,7 @@ class DPMM:
 
     def loadData(self, dataset):
         df = pd.read_csv(dataset)
-        self.labels = df["Activity Label"]
-        return df, df["Activity Label"]
+        return df, self.mapRunToLabel(df["Activity Label"])
 
     def preprocessData(self):
         df = self.data
@@ -48,8 +52,10 @@ class DPMM:
             df["Activity Type"].isin(["Running", "Track Running", "Treadmill Running"])
         ]
 
-        df = df[self.cols]
+        df = df[self.cols + ["Activity Label"]]
         df.dropna(inplace=True)
+        self.labels = self.mapRunToLabel(df["Activity Label"])
+        df = df[self.cols]
 
         def hmsToSeconds(x):
             h, m, s = map(float, x.split(":"))
@@ -78,6 +84,20 @@ class DPMM:
 
         self.data = scaledDF
         return scaledDF
+
+    def mapRunToLabel(self, labels):
+        labelMap = {
+            "NonRun": -1,
+            "Race": 0,
+            "Workout": 1,
+            "Long Run": 2,
+            "Training Run": 3,
+            "Recovery": 4,
+            "Double": 5,
+            "WU/CD": 6,
+            "Shakeout": 7,
+        }
+        return np.array([labelMap[label] for label in labels if label in labelMap])
 
     def fit(self):
         if self.data.empty:
@@ -158,10 +178,46 @@ class DPMM:
                 print(f"Number of Clusters: {len(clusters)}")
                 print(f"Cluster assignments: {assignments}")
             # TODO: Add better convergence criterion
-            if len(clusters) <= 8:
+            if len(clusters) == 8:
                 return assignments
         return assignments
 
-    def evaluate(self):
-        for sample in self.data.iterrows():
-            pass
+    def transformLabels(self, labels):
+        clusters = np.unique(labels)
+        mapping = {val: idx for idx, val in enumerate(clusters)}
+        newLabels = np.array([mapping[val] for val in labels])
+        return newLabels
+
+    def evaluate(
+        self,
+        predLabels,
+        trueLabels=None,
+        method: Literal["ARI", "Silhouette", "Accuracy", "F1"] = "Silhouette",
+    ):
+        if trueLabels is not None:
+            # Run the Hungarian algorithm to find mapping between true and predicted labels
+            cost = np.zeros((8, 8))
+            for true, pred in zip(trueLabels, predLabels):
+                cost[true][pred] += 1
+
+            rowIdx, colIdx = linear_sum_assignment(cost, maximize=True)
+            mapping = {pred: true for true, pred in zip(rowIdx, colIdx)}
+            predLabels = np.array([mapping[pred] for pred in predLabels])
+        if method == "ARI":
+            ari = adjusted_rand_score(trueLabels, predLabels)
+            return ari
+        elif method == "Silhouette":
+            silhouette = silhouette_score(self.data.values, predLabels)
+            return silhouette
+        elif method == "Accuracy":
+            if trueLabels is None:
+                return None
+            accuracy = accuracy_score(trueLabels, predLabels)
+            return accuracy
+        elif method == "F1":
+            if trueLabels is None:
+                return None
+            f1 = f1_score(trueLabels, predLabels, average="weighted")
+            return f1
+        else:
+            print("Invalid evaluation method")

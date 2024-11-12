@@ -22,7 +22,9 @@ def plotParallelCoordinates(data, clusters):
     plt.ylabel("Value")
     plt.xticks()
     plt.grid(True)
-    plt.savefig(f"res/parallel_coordinates{Config.OUTPUT_SUFFIX}.png")
+    plt.savefig(
+        f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}parallel_coordinates{Config.OUTPUT_SUFFIX}.png"
+    )
     if Config.DEBUG:
         plt.show()
 
@@ -55,7 +57,9 @@ def plotClusters3d(data, clusters):
             va="center",
             bbox=dict(facecolor="white", edgecolor="black", boxstyle="round,pad=0.5"),
         )
-    plt.savefig(f"res/cluster_plot_3d{Config.OUTPUT_SUFFIX}.png")
+    plt.savefig(
+        f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}cluster_plot_3d{Config.OUTPUT_SUFFIX}.png"
+    )
     if Config.DEBUG:
         plt.show()
 
@@ -98,6 +102,8 @@ def plotClusters2d(data, clusters):
             va="center",
             bbox=dict(facecolor="white", edgecolor="black", boxstyle="round,pad=0.5"),
         )
-    plt.savefig(f"res/cluster_plot{Config.OUTPUT_SUFFIX}.png")
+    plt.savefig(
+        f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}cluster_plot{Config.OUTPUT_SUFFIX}.png"
+    )
     if Config.DEBUG:
         plt.show()

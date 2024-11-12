@@ -11,9 +11,6 @@ from config import Config
 
 import sys
 
-# Set random seed for reproducibility
-np.random.seed(0)
-
 
 # Use sklearn's DPMM implementation
 def getSklDPMM(alpha):
@@ -33,7 +30,7 @@ def reduceClusters(data, n_components=2):
 
 
 def printToFile(data, assignments):
-    p = f"res/{'sk/' if Config.USE_SKLEARN else ''}sklearn_cluster_assignments{Config.OUTPUT_SUFFIX}.txt"
+    p = f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}sklearn_cluster_assignments{Config.OUTPUT_SUFFIX}.txt"
     with open(
         p,
         "w+",
@@ -44,9 +41,9 @@ def printToFile(data, assignments):
 
 
 def main():
-    global DEBUG
-    if "-d" in sys.argv:
-        DEBUG = True
+    # Set random seed for reproducibility
+    np.random.seed(0)
+    Config.SetConfig(sys.argv[1:])
     dpmm = DPMM(alpha=25)
     dpmm.initializeData()
 
@@ -54,23 +51,11 @@ def main():
     fullData = data
     data = reduceClusters(data, n_components=3)
 
+    assignments = np.array([])
     if Config.USE_SKLEARN:
         skDPMM = getSklDPMM(10)
         skDPMM.fit(data)
-        skAssignments = skDPMM.predict(data)
-        print(skAssignments)
-        plotClusters2d(reduceClusters(data, n_components=2), skAssignments)
-        plotClusters3d(data, skAssignments)
-        plotParallelCoordinates(
-            pd.DataFrame(fullData, columns=fullData.columns), skAssignments
-        )
-
-        if Config.DEBUG:
-            printToFile(fullData, skAssignments)
-    else:
-        dpmm.data = data
-        assignments = dpmm.fit()
-        print(assignments)
+        assignments = skDPMM.predict(data)
         plotClusters2d(reduceClusters(data, n_components=2).values, assignments)
         plotClusters3d(data.values, assignments)
         plotParallelCoordinates(
@@ -79,6 +64,28 @@ def main():
 
         if Config.DEBUG:
             printToFile(fullData, assignments)
+    else:
+        dpmm.data = data
+        assignments = dpmm.fit()
+        plotClusters2d(data.values, assignments)
+        plotClusters3d(data.values, assignments)
+        plotParallelCoordinates(
+            pd.DataFrame(fullData, columns=fullData.columns), assignments
+        )
+
+        if Config.DEBUG:
+            printToFile(fullData, assignments)
+
+    assignments = dpmm.transformLabels(assignments)
+
+    silhouette = dpmm.evaluate(assignments, dpmm.labels, "Silhouette")
+    ari = dpmm.evaluate(assignments, dpmm.labels, "ARI")
+    accuracy = dpmm.evaluate(assignments, dpmm.labels, "Accuracy")
+    f1 = dpmm.evaluate(assignments, dpmm.labels, "F1")
+    print(f"Silhouette: {silhouette}")
+    print(f"ARI: {ari}")
+    print(f"Accuracy: {accuracy}")
+    print(f"F1: {f1}")
 
 
 if __name__ == "__main__":
