@@ -9,6 +9,7 @@ from plot import plotClusters2d, plotClusters3d, plotParallelCoordinates
 from DPMM import DPMM
 from config import Config
 from evaluation import Evaluation
+from util.mapRun import transformLabels
 
 import sys
 
@@ -57,7 +58,7 @@ def main():
         skDPMM = getSklDPMM(100)
         skDPMM.fit(data)
         assignments = skDPMM.predict(data)
-        assignments = dpmm.transformLabels(assignments)
+        assignments = transformLabels(assignments)
         plotClusters2d(reduceClusters(data, n_components=2).values, assignments)
         # plotClusters3d(data.values, assignments)
         plotParallelCoordinates(
@@ -69,7 +70,7 @@ def main():
     else:
         dpmm.data = data
         assignments = dpmm.fit()
-        assignments = dpmm.transformLabels(assignments)
+        assignments = transformLabels(assignments)
         plotClusters2d(data.values, assignments)
         # plotClusters3d(data.values, assignments)
         plotParallelCoordinates(
@@ -79,15 +80,15 @@ def main():
         if Config.DEBUG:
             printToFile(fullData, assignments)
 
-    assignments = dpmm.transformLabels(assignments)
+    assignments = transformLabels(assignments)
     eval = Evaluation()
-    eval.evaluateAll(assignments, dpmm.labels, dpmm.data.values)
+    results = eval.evaluateAll(assignments, dpmm.labels, dpmm.data.values)
     with open(
         f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}results{Config.OUTPUT_SUFFIX}.txt",
         "w+",
     ) as f:
-        print(eval.results, file=f)
-        print(eval.results)
+        print(results, file=f)
+        print(results)
 
 
 if __name__ == "__main__":

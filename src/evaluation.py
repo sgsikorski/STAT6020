@@ -8,14 +8,12 @@ import numpy as np
 class Evaluation:
     def __init__(self):
         self.methods = ["ARI", "Silhouette", "Accuracy", "F1", "Precision", "Recall"]
-        self.results = {}
 
     def evaluateAll(self, predLabels, trueLabels, dataValues=None):
+        results = {}
         for method in self.methods:
-            self.results[method] = self.evaluate(
-                predLabels, trueLabels, method, dataValues
-            )
-        return self.results
+            results[method] = self.evaluate(predLabels, trueLabels, method, dataValues)
+        return results
 
     def evaluate(self, predLabels, trueLabels=None, method="ARI", dataValues=None):
         if trueLabels is not None:

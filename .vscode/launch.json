@@ -4,12 +4,16 @@
             "name": "Run main",
             "type": "debugpy",
             "request": "launch",
-            "program": "src/main.py",
+            "program": "${workspaceFolder}/src/main.py",
+            "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
             "args": [
                 "-d",
                 "--save"
-            ]
+            ],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}"
+            }
         }
     ]
 }
