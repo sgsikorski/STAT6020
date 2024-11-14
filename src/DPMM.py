@@ -1,13 +1,9 @@
 from scipy.stats import invwishart, multivariate_normal, wishart
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import adjusted_rand_score
-from sklearn.metrics import silhouette_score
-from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from scipy.optimize import linear_sum_assignment
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
-from typing import Literal
 
 from config import Config
 
@@ -26,10 +22,7 @@ class DPMM:
             "Max HR",
             "Avg Power",
             "Max Power",
-            # "Calories",
-            # "Avg Run Cadence",
-            # "Max Run Cadence",
-            # "Total Ascent"
+            "Calories",
         ]
         self.clusters = {0: [0]}
         self.idx = 0
@@ -48,15 +41,23 @@ class DPMM:
         df.replace("--", np.nan, inplace=True)
         df["Best Pace"].fillna(df["Avg Pace"], inplace=True)
 
-        one_year_ago = datetime.now() - timedelta(days=120)
+        one_year_ago = datetime.now() - timedelta(days=365)
         df = df[df["Date"] > one_year_ago]
         df = df[
             df["Activity Type"].isin(["Running", "Track Running", "Treadmill Running"])
         ]
 
+        df["Distance"] = df["Distance"].str.replace(",", "").astype(float)
+        df["Max Power"] = df["Max Power"].str.replace(",", "").astype(float)
+        df["Avg Power"] = df["Avg Power"].str.replace(",", "").astype(float)
+        df["Calories"] = df["Calories"].str.replace(",", "").astype(float)
+
+        df.loc[df["Activity Type"] == "Track Running", "Distance"] /= 1609.0
+
         df = df[self.cols + ["Activity Label"]]
         df.dropna(inplace=True)
         self.labels = self.mapRunToLabel(df["Activity Label"])
+        self.runTier = self.mapRunToTier(df["Activity Label"])
         df = df[self.cols]
 
         def hmsToSeconds(x):
@@ -77,9 +78,6 @@ class DPMM:
             print(df.columns.array.tolist())
             print(df)
 
-        # TODO: See how PCA prior to MinMax changes results
-        # data = reduceClusters(df, 3)
-
         scaler = MinMaxScaler(feature_range=(0, 1))
         scaledData = scaler.fit_transform(df)
         scaledDF = pd.DataFrame(scaledData, columns=df.columns)
@@ -95,19 +93,31 @@ class DPMM:
             "Long Run": 2,
             "Training Run": 3,
             "Recovery": 4,
-            "Double": 5,
-            "WU/CD": 6,
-            "Shakeout": 7,
+            "WU/CD": 5,
+            "Shakeout": 6,
         }
         return np.array([labelMap[label] for label in labels if label in labelMap])
+
+    def mapRunToTier(self, labels):
+        self.tiers = {
+            "NonRun": -1,
+            "Race": 0,
+            "Workout": 1,
+            "Long Run": 1,
+            "Training Run": 2,
+            "Recovery": 3,
+            "WU/CD": 3,
+            "Shakeout": 3,
+        }
+        return np.array([self.tiers[label] for label in labels if label in self.tiers])
 
     def fit(self):
         if self.data.empty:
             self.initializeData()
-        self.mu = np.zeros(self.data.shape[1])
-        self.psi = np.eye(self.data.shape[1])
-        self.nu = self.data.shape[1] + 10
         self.N, self.D = self.data.shape
+        self.mu = np.zeros(self.D) + 0.25
+        self.psi = 1.5 * np.cov(self.data.values, rowvar=False)
+        self.nu = self.D + 11
         self.assignments = np.zeros(self.N, dtype=int)
 
         # Start over if rerunning fit
@@ -115,6 +125,7 @@ class DPMM:
             self.idx = 0
             self.clusters = {0: [0]}
         for _ in range(self.iters):
+            prevNumClusters = len(self.clusters)
             for n in range(self.N):
                 currP = self.data.iloc[n].values
                 currC = self.assignments[n]
@@ -129,8 +140,8 @@ class DPMM:
                 print(f"Iteration {_ + 1} complete")
                 print(f"Number of Clusters: {len(self.clusters)}")
                 print(f"Cluster assignments: {self.assignments}")
-            # TODO: Add better convergence criterion
-            if len(self.clusters) == 8:
+
+            if len(self.clusters) == 6 and len(self.clusters) == prevNumClusters:
                 break
             self.idx = 0
         return self.assignments
@@ -171,7 +182,7 @@ class DPMM:
         if len(self.clusters) < 20:
             # Add the probability of forming a new cluster
             sigma = wishart.rvs(df=self.nu, scale=self.psi)
-            newMu = np.random.multivariate_normal(self.mu, sigma / self._lambda)
+            newMu = np.random.multivariate_normal(self.mu, sigma * self._lambda)
             newLikelihood = multivariate_normal.pdf(sample, mean=newMu, cov=sigma)
             newClusterPrior = self.alpha / (totalP + self.alpha)
             posteriorProbs.append(newClusterPrior * newLikelihood)
@@ -198,37 +209,3 @@ class DPMM:
         mapping = {val: idx for idx, val in enumerate(clusters)}
         newLabels = np.array([mapping[val] for val in labels])
         return newLabels
-
-    def evaluate(
-        self,
-        predLabels,
-        trueLabels=None,
-        method: Literal["ARI", "Silhouette", "Accuracy", "F1"] = "Silhouette",
-    ):
-        if trueLabels is not None:
-            # Run the Hungarian algorithm to find mapping between true and predicted labels
-            cost = np.zeros((8, 8))
-            for true, pred in zip(trueLabels, predLabels):
-                cost[true][pred] += 1
-
-            rowIdx, colIdx = linear_sum_assignment(cost, maximize=True)
-            mapping = {pred: true for true, pred in zip(rowIdx, colIdx)}
-            predLabels = np.array([mapping[pred] for pred in predLabels])
-        if method == "ARI":
-            ari = adjusted_rand_score(trueLabels, predLabels)
-            return ari
-        elif method == "Silhouette":
-            silhouette = silhouette_score(self.data.values, predLabels)
-            return silhouette
-        elif method == "Accuracy":
-            if trueLabels is None:
-                return None
-            accuracy = accuracy_score(trueLabels, predLabels)
-            return accuracy
-        elif method == "F1":
-            if trueLabels is None:
-                return None
-            f1 = f1_score(trueLabels, predLabels, average="weighted")
-            return f1
-        else:
-            print("Invalid evaluation method")

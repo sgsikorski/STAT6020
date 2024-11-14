@@ -8,6 +8,7 @@ from sklearn.mixture import BayesianGaussianMixture
 from plot import plotClusters2d, plotClusters3d, plotParallelCoordinates
 from DPMM import DPMM
 from config import Config
+from evaluation import Evaluation
 
 import sys
 
@@ -37,27 +38,28 @@ def printToFile(data, assignments):
     ) as f:
         for i, (_, d) in enumerate(data.iterrows()):
             f.write(f"Point: {d} assigned to cluster {assignments[i]}\n")
-            print(f"Point: {d} assigned to cluster {assignments[i]}")
+            # print(f"Point: {d} assigned to cluster {assignments[i]}")
 
 
 def main():
     # Set random seed for reproducibility
     np.random.seed(0)
     Config.SetConfig(sys.argv[1:])
-    dpmm = DPMM(alpha=25)
+    dpmm = DPMM(alpha=0.5, iters=100)
     dpmm.initializeData()
 
     data = dpmm.preprocessData()
     fullData = data
-    data = reduceClusters(data, n_components=3)
+    data = reduceClusters(data, n_components=2)
 
     assignments = np.array([])
     if Config.USE_SKLEARN:
-        skDPMM = getSklDPMM(10)
+        skDPMM = getSklDPMM(100)
         skDPMM.fit(data)
         assignments = skDPMM.predict(data)
+        assignments = dpmm.transformLabels(assignments)
         plotClusters2d(reduceClusters(data, n_components=2).values, assignments)
-        plotClusters3d(data.values, assignments)
+        # plotClusters3d(data.values, assignments)
         plotParallelCoordinates(
             pd.DataFrame(fullData, columns=fullData.columns), assignments
         )
@@ -67,8 +69,9 @@ def main():
     else:
         dpmm.data = data
         assignments = dpmm.fit()
+        assignments = dpmm.transformLabels(assignments)
         plotClusters2d(data.values, assignments)
-        plotClusters3d(data.values, assignments)
+        # plotClusters3d(data.values, assignments)
         plotParallelCoordinates(
             pd.DataFrame(fullData, columns=fullData.columns), assignments
         )
@@ -77,15 +80,14 @@ def main():
             printToFile(fullData, assignments)
 
     assignments = dpmm.transformLabels(assignments)
-
-    silhouette = dpmm.evaluate(assignments, dpmm.labels, "Silhouette")
-    ari = dpmm.evaluate(assignments, dpmm.labels, "ARI")
-    accuracy = dpmm.evaluate(assignments, dpmm.labels, "Accuracy")
-    f1 = dpmm.evaluate(assignments, dpmm.labels, "F1")
-    print(f"Silhouette: {silhouette}")
-    print(f"ARI: {ari}")
-    print(f"Accuracy: {accuracy}")
-    print(f"F1: {f1}")
+    eval = Evaluation()
+    eval.evaluateAll(assignments, dpmm.labels, dpmm.data.values)
+    with open(
+        f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}results{Config.OUTPUT_SUFFIX}.txt",
+        "w+",
+    ) as f:
+        print(eval.results, file=f)
+        print(eval.results)
 
 
 if __name__ == "__main__":
