@@ -4,6 +4,7 @@ from collections import defaultdict
 
 from sklearn.decomposition import PCA
 from sklearn.mixture import BayesianGaussianMixture
+from sklearn.model_selection import train_test_split
 
 from plot import plotClusters2d, plotClusters3d, plotParallelCoordinates
 from DPMM import DPMM
@@ -46,43 +47,53 @@ def main():
     # Set random seed for reproducibility
     np.random.seed(0)
     Config.SetConfig(sys.argv[1:])
-    dpmm = DPMM(alpha=0.5, iters=100)
+    dpmm = DPMM(alpha=2, iters=100)
     dpmm.initializeData()
 
     data = dpmm.preprocessData()
-    fullData = data
-    data = reduceClusters(data, n_components=2)
+    trainSplit = 0.8
+    trainIdx, testIdx = train_test_split(
+        data.index, train_size=trainSplit, random_state=0
+    )
+    trainData, testData = data.iloc[trainIdx], data.iloc[testIdx]
+    trainLabels, testLabels = dpmm.labels[trainIdx.values], dpmm.labels[testIdx.values]
+
+    fullTrain, fullTest = trainData, testData
+    trainData = reduceClusters(trainData, n_components=2)
+    testData = reduceClusters(testData, n_components=2)
 
     assignments = np.array([])
     if Config.USE_SKLEARN:
         skDPMM = getSklDPMM(100)
-        skDPMM.fit(data)
-        assignments = skDPMM.predict(data)
+        skDPMM.fit(trainData)
+        assignments = skDPMM.predict(trainData)
         assignments = transformLabels(assignments)
-        plotClusters2d(reduceClusters(data, n_components=2).values, assignments)
+        assignments = HungarianMatch(assignments, trainLabels)
+        plotClusters2d(trainData.values, assignments)
         # plotClusters3d(data.values, assignments)
         plotParallelCoordinates(
-            pd.DataFrame(fullData, columns=fullData.columns), assignments
+            pd.DataFrame(fullTrain, columns=fullTrain.columns), assignments
         )
 
         if Config.DEBUG:
-            printToFile(fullData, assignments)
+            printToFile(fullTrain, assignments)
     else:
-        dpmm.data = data
-        assignments = dpmm.fit()
+        dpmm.data = trainData
+        assignments = dpmm.fit(trainData)
         assignments = transformLabels(assignments)
-        assignments = HungarianMatch(assignments, dpmm.labels)
-        plotClusters2d(data.values, assignments, "raw")
+        assignments = HungarianMatch(assignments, trainLabels)
+        plotClusters2d(trainData.values, assignments, "raw")
         # plotClusters3d(data.values, assignments)
         plotParallelCoordinates(
-            pd.DataFrame(fullData, columns=fullData.columns), assignments, "raw"
+            pd.DataFrame(fullTrain, columns=fullTrain.columns), assignments, "raw"
         )
 
         if Config.DEBUG:
-            printToFile(fullData, assignments)
+            printToFile(fullTrain, assignments)
 
+    plotClusters2d(trainData.values, trainLabels)
     eval = Evaluation()
-    results = eval.evaluateAll(assignments, dpmm.labels, dpmm.data.values)
+    results = eval.evaluateAll(assignments, trainLabels, trainData.values)
     with open(
         f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}results{Config.OUTPUT_SUFFIX}.txt",
         "w+",
@@ -91,10 +102,46 @@ def main():
         print(results)
 
     newClusters = mapRunToTier(assignments)
-    newLabels = mapRunToTier(dpmm.labels)
-    results2 = eval.evaluateAll(newClusters, newLabels, dpmm.data.values)
+    newLabels = mapRunToTier(trainLabels)
+    results2 = eval.evaluateAll(newClusters, newLabels, trainData.values)
     print(results2)
-    plotClusters2d(data.values, newClusters, "tiered")
+    plotClusters2d(trainData.values, newClusters, "tiered")
+
+    # Test on unseen data
+    testAssignments = np.array([])
+    if Config.USE_SKLEARN:
+        testAssignments = skDPMM.predict(testData)
+        testAssignments = transformLabels(testAssignments)
+        testAssignments = HungarianMatch(testAssignments, testLabels)
+
+        if Config.DEBUG:
+            printToFile(fullTest, testAssignments)
+    else:
+        testAssignments = dpmm.predictSamples(testData.values, trainData)
+        testAssignments = transformLabels(testAssignments)
+        testAssignments = HungarianMatch(testAssignments, testLabels)
+
+        if Config.DEBUG:
+            printToFile(fullTest, testAssignments)
+
+    newClusters = mapRunToTier(testAssignments)
+    newLabels = mapRunToTier(testLabels)
+    results2 = eval.evaluateAll(newClusters, newLabels, testData.values)
+    print(results2)
+    plotClusters2d(testData.values, newClusters)
+
+    ######
+    # completeData = trainData + testData
+    # completeLabels = np.concatenate((trainLabels, testLabels))
+    # dpmm.predictFitSamples(testData.values, completeData.values)
+
+    # assignments = dpmm.assignments
+    # assignments = transformLabels(assignments)
+    # assignments = HungarianMatch(assignments, completeLabels)
+    # plotClusters2d(completeData.values, assignments)
+    # newClusters = mapRunToTier(assignments)
+    # newLabels = mapRunToTier(completeLabels)
+    # results3 = eval.evaluateAll(newClusters, newLabels, completeData.values)
 
 
 if __name__ == "__main__":

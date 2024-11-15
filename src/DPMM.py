@@ -28,7 +28,7 @@ class DPMM:
         self.clusters = {0: [0]}
         self.idx = 0
 
-    def initializeData(self, dataset="src/Activities.csv"):
+    def initializeData(self, dataset="data/activities.csv"):
         self.data, self.labels = self.loadData(dataset)
 
     def loadData(self, dataset):
@@ -85,12 +85,12 @@ class DPMM:
         self.data = scaledDF
         return scaledDF
 
-    def fit(self):
-        if self.data.empty:
-            self.initializeData()
-        self.N, self.D = self.data.shape
+    def fit(self, data):
+        if data.empty:
+            raise ValueError("No Data")
+        self.N, self.D = data.shape
         self.mu = np.zeros(self.D) + 0.25
-        self.psi = 1.5 * np.cov(self.data.values, rowvar=False)
+        self.psi = 1.5 * np.cov(data.values, rowvar=False)
         self.nu = self.D + 11
         self.assignments = np.zeros(self.N, dtype=int)
 
@@ -101,21 +101,21 @@ class DPMM:
         for _ in range(self.iters):
             prevNumClusters = len(self.clusters)
             for n in range(self.N):
-                currP = self.data.iloc[n].values
+                currP = data.iloc[n].values
                 currC = self.assignments[n]
                 if n in self.clusters[currC]:
                     self.clusters[currC].remove(n)
                 if len(self.clusters[currC]) == 0:
                     del self.clusters[currC]
 
-                self.predict(currP)
+                self.predict(currP, data)
 
             if Config.DEBUG:
                 print(f"Iteration {_ + 1} complete")
                 print(f"Number of Clusters: {len(self.clusters)}")
                 print(f"Cluster assignments: {self.assignments}")
 
-            if len(self.clusters) == 6 and len(self.clusters) == prevNumClusters:
+            if len(self.clusters) == 7 and len(self.clusters) == prevNumClusters:
                 break
             self.idx = 0
         return self.assignments
@@ -123,7 +123,7 @@ class DPMM:
     def addPoint(self, pointIdx, newCluster, new_cluster_possible):
         options = list(self.clusters.keys())
         if pointIdx >= len(self.assignments):
-            self.assignments = self.assignments.append(-1)
+            np.append(self.assignments, -1)
         # Assign the data point to the chosen cluster (either existing or new)
         if new_cluster_possible and newCluster == len(options):  # New cluster
             maxId = max(options) + 1 if len(options) > 0 else 0
@@ -133,7 +133,7 @@ class DPMM:
             self.assignments[pointIdx] = options[newCluster]
             self.clusters[options[newCluster]].append(pointIdx)
 
-    def predict(self, sample):
+    def predict(self, sample, data, train=True):
         sizes = {k: len(self.clusters[k]) for k in self.clusters}
         totalP = sum(sizes.values())
 
@@ -141,7 +141,8 @@ class DPMM:
         options = list(self.clusters.keys())
 
         for k in options:
-            cluster_data = np.array(self.data.iloc[self.clusters[k]].values)
+            val = self.clusters[k]
+            cluster_data = np.array(data.iloc[self.clusters[k]].values)
             mu_k = np.mean(cluster_data, axis=0)
             cov_k = np.eye(self.D) * 5e-2
             if len(cluster_data) > 1:
@@ -170,10 +171,19 @@ class DPMM:
 
         # Sample new cluster assignment
         newCluster = np.random.choice(len(posteriorProbs), p=posteriorProbs)
-        self.addPoint(self.idx, newCluster, new_cluster_possible)
-        self.idx += 1
+        if train:
+            self.addPoint(self.idx, newCluster, new_cluster_possible)
+            self.idx += 1
         return newCluster, new_cluster_possible
 
-    def predictSamples(self, samples):
+    def predictFitSamples(self, samples, data):
         for sample in samples:
-            self.predict(sample)
+            self.predict(sample, data)
+
+    def predictSamples(self, samples, trainData):
+        clusters = []
+        # self.assignments = np.append(self.assignments, [-1] * len(samples))
+        for sample in samples:
+            cluster, _ = self.predict(sample, trainData, train=False)
+            clusters.append(cluster)
+        return clusters

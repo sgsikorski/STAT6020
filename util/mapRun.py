@@ -27,7 +27,10 @@ def mapRunToTier(labels):
         5: 4,
         6: 4,
     }
-    return np.array([tiers[label] for label in labels if label in tiers])
+    mapping = []
+    for label in labels:
+        mapping.append(tiers[label]) if label in tiers else mapping.append(5)
+    return mapping
 
 
 def transformLabels(labels):

@@ -9,7 +9,6 @@
             "console": "integratedTerminal",
             "args": [
                 "-d",
-                "--save"
             ],
             "env": {
                 "PYTHONPATH": "${workspaceFolder}"

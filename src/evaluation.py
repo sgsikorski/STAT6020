@@ -51,5 +51,6 @@ class Evaluation:
         else:
             print("Invalid evaluation method")
 
+    # This should check the number that are classified as lower
     def hierarchicalEvaluate(self):
         pass
