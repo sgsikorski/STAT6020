@@ -1,8 +1,9 @@
 from sklearn.metrics import adjusted_rand_score
 from sklearn.metrics import silhouette_score
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
-from scipy.optimize import linear_sum_assignment
 import numpy as np
+
+from util.mapRun import HungarianMatch
 
 
 class Evaluation:
@@ -17,17 +18,8 @@ class Evaluation:
 
     def evaluate(self, predLabels, trueLabels=None, method="ARI", dataValues=None):
         if trueLabels is not None:
-            numLabels = (
-                max(np.unique(predLabels).shape[0], np.unique(trueLabels).shape[0]) + 1
-            )
-            # Run the Hungarian algorithm to find mapping between true and predicted labels
-            cost = np.zeros((numLabels, numLabels))
-            for true, pred in zip(trueLabels, predLabels):
-                cost[true][pred] += 1
+            predLabels = HungarianMatch(predLabels, trueLabels)
 
-            rowIdx, colIdx = linear_sum_assignment(cost, maximize=True)
-            mapping = {pred: true for true, pred in zip(rowIdx, colIdx)}
-            predLabels = np.array([mapping[pred] for pred in predLabels])
         if method == "ARI":
             ari = adjusted_rand_score(trueLabels, predLabels)
             return ari
@@ -52,7 +44,9 @@ class Evaluation:
         elif method == "Recall":
             if trueLabels is None:
                 return None
-            recall = recall_score(trueLabels, predLabels, average="weighted")
+            recall = recall_score(
+                trueLabels, predLabels, average="weighted", zero_division=1
+            )
             return recall
         else:
             print("Invalid evaluation method")

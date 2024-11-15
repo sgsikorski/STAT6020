@@ -6,7 +6,7 @@ import pandas as pd
 from datetime import datetime, timedelta
 
 from config import Config
-from util.mapRun import mapRunToLabel, mapRunToTier
+from util.mapRun import mapRunToLabel
 
 
 class DPMM:
@@ -58,7 +58,6 @@ class DPMM:
         df = df[self.cols + ["Activity Label"]]
         df.dropna(inplace=True)
         self.labels = mapRunToLabel(df["Activity Label"])
-        self.runTier = mapRunToTier(df["Activity Label"])
         df = df[self.cols]
 
         def hmsToSeconds(x):

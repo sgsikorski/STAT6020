@@ -9,7 +9,7 @@ from plot import plotClusters2d, plotClusters3d, plotParallelCoordinates
 from DPMM import DPMM
 from config import Config
 from evaluation import Evaluation
-from util.mapRun import transformLabels
+from util.mapRun import transformLabels, mapRunToTier, HungarianMatch
 
 import sys
 
@@ -71,16 +71,16 @@ def main():
         dpmm.data = data
         assignments = dpmm.fit()
         assignments = transformLabels(assignments)
-        plotClusters2d(data.values, assignments)
+        assignments = HungarianMatch(assignments, dpmm.labels)
+        plotClusters2d(data.values, assignments, "raw")
         # plotClusters3d(data.values, assignments)
         plotParallelCoordinates(
-            pd.DataFrame(fullData, columns=fullData.columns), assignments
+            pd.DataFrame(fullData, columns=fullData.columns), assignments, "raw"
         )
 
         if Config.DEBUG:
             printToFile(fullData, assignments)
 
-    assignments = transformLabels(assignments)
     eval = Evaluation()
     results = eval.evaluateAll(assignments, dpmm.labels, dpmm.data.values)
     with open(
@@ -89,6 +89,12 @@ def main():
     ) as f:
         print(results, file=f)
         print(results)
+
+    newClusters = mapRunToTier(assignments)
+    newLabels = mapRunToTier(dpmm.labels)
+    results2 = eval.evaluateAll(newClusters, newLabels, dpmm.data.values)
+    print(results2)
+    plotClusters2d(data.values, newClusters, "tiered")
 
 
 if __name__ == "__main__":

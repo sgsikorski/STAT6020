@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.optimize import linear_sum_assignment
 
 
 def mapRunToLabel(labels):
@@ -17,14 +18,14 @@ def mapRunToLabel(labels):
 
 def mapRunToTier(labels):
     tiers = {
-        "NonRun": -1,
-        "Race": 0,
-        "Workout": 1,
-        "Long Run": 1,
-        "Training Run": 2,
-        "Recovery": 3,
-        "WU/CD": 3,
-        "Shakeout": 3,
+        -1: -1,
+        0: 0,
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 4,
+        6: 4,
     }
     return np.array([tiers[label] for label in labels if label in tiers])
 
@@ -34,3 +35,16 @@ def transformLabels(labels):
     mapping = {val: idx for idx, val in enumerate(clusters)}
     newLabels = np.array([mapping[val] for val in labels])
     return newLabels
+
+
+def HungarianMatch(predLabels, trueLabels):
+    numLabels = max(np.unique(predLabels).shape[0], np.unique(trueLabels).shape[0]) + 1
+    # Run the Hungarian algorithm to find mapping between true and predicted labels
+    cost = np.zeros((numLabels, numLabels))
+    for true, pred in zip(trueLabels, predLabels):
+        cost[true][pred] += 1
+
+    rowIdx, colIdx = linear_sum_assignment(cost, maximize=True)
+    mapping = {pred: true for true, pred in zip(rowIdx, colIdx)}
+    predLabels = np.array([mapping[pred] for pred in predLabels])
+    return predLabels

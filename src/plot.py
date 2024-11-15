@@ -7,7 +7,7 @@ import pandas as pd
 from config import Config
 
 
-def plotParallelCoordinates(data, clusters):
+def plotParallelCoordinates(data, clusters, path=None):
     data["Cluster"] = clusters
 
     plt.figure(figsize=(12, 6))
@@ -23,14 +23,19 @@ def plotParallelCoordinates(data, clusters):
     plt.xticks()
     plt.grid(True)
     if Config.SAVE_FIGS:
-        plt.savefig(
-            f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}parallel_coordinates{Config.OUTPUT_SUFFIX}.png"
-        )
+        if path:
+            plt.savefig(
+                f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}{path}/cluster_plot{Config.OUTPUT_SUFFIX}.png"
+            )
+        else:
+            plt.savefig(
+                f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}cluster_plot{Config.OUTPUT_SUFFIX}.png"
+            )
     if Config.DEBUG:
         plt.show()
 
 
-def plotClusters3d(data, clusters):
+def plotClusters3d(data, clusters, path=None):
     fig = plt.figure()
     ax = fig.add_subplot(projection="3d")
 
@@ -59,14 +64,19 @@ def plotClusters3d(data, clusters):
             bbox=dict(facecolor="white", edgecolor="black", boxstyle="round,pad=0.5"),
         )
     if Config.SAVE_FIGS:
-        plt.savefig(
-            f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}cluster_plot_3d{Config.OUTPUT_SUFFIX}.png"
-        )
+        if path:
+            plt.savefig(
+                f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}{path}/cluster_plot{Config.OUTPUT_SUFFIX}.png"
+            )
+        else:
+            plt.savefig(
+                f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}cluster_plot{Config.OUTPUT_SUFFIX}.png"
+            )
     if Config.DEBUG:
         plt.show()
 
 
-def plotClusters2d(data, clusters):
+def plotClusters2d(data, clusters, path=None):
     fig = plt.figure()
     ax = fig.add_subplot()
 
@@ -105,8 +115,13 @@ def plotClusters2d(data, clusters):
             bbox=dict(facecolor="white", edgecolor="black", boxstyle="round,pad=0.5"),
         )
     if Config.SAVE_FIGS:
-        plt.savefig(
-            f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}cluster_plot{Config.OUTPUT_SUFFIX}.png"
-        )
+        if path:
+            plt.savefig(
+                f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}{path}/cluster_plot{Config.OUTPUT_SUFFIX}.png"
+            )
+        else:
+            plt.savefig(
+                f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}cluster_plot{Config.OUTPUT_SUFFIX}.png"
+            )
     if Config.DEBUG:
         plt.show()
