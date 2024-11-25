@@ -3,7 +3,9 @@ from sklearn.metrics import silhouette_score
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 import numpy as np
 
-from util.mapRun import HungarianMatch
+from util.mapRun import HungarianMatch, mapRunToTier
+from util.plot import plotClusters2d
+from config import Config
 
 
 class Evaluation:
@@ -54,3 +56,20 @@ class Evaluation:
     # This should check the number that are classified as lower
     def hierarchicalEvaluate(self):
         pass
+
+    def fullEvaluate(self, assignments, labels, data):
+        tieredClusters = mapRunToTier(assignments)
+        tieredLabels = mapRunToTier(labels)
+        plotClusters2d(data, labels)
+        plotClusters2d(data, tieredClusters, "tiered")
+
+        results = self.evaluateAll(assignments, labels, data)
+        tieredResults = self.evaluateAll(tieredClusters, tieredLabels, data)
+        with open(
+            f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}results{Config.OUTPUT_SUFFIX}.txt",
+            "w+",
+        ) as f:
+            print(results, file=f)
+            print(tieredResults, file=f)
+            print(results)
+            print(tieredResults)
