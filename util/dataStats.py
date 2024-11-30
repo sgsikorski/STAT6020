@@ -3,8 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def countRunTypes(data, isSplit=""):
-    counts = data["Activity Label"].value_counts()
-    plt.pie(counts, labels=data["Activity Label"].index, autopct="%1.1f%%")
-    plt.title(f"{isSplit} Activity Label Distribution")
-    plt.savefig(f"res/{isSplit}activity_label_distribution.png")
+def countRunTypes(labels, isSplit=""):
+    uniques, counts = np.unique(labels, return_counts=True)
+    fig = plt.figure()
+    ax = fig.add_subplot()
+    ax.pie(counts, labels=uniques, autopct="%1.1f%%")
+    ax.set_title(f"{isSplit.capitalize()} Activity Label Distribution")
+    plt.savefig(f"res/{isSplit.capitalize()}_activity_label_distribution.png")

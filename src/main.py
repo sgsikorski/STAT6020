@@ -9,6 +9,8 @@ from config import Config
 from evaluation import Evaluation
 from util.dataStats import countRunTypes
 from runModeling import runSkLearn, fitDPM, predictDPM
+from util.plot import plotClusters2d
+from util.mapRun import mapLabelToRun
 
 import sys
 
@@ -19,6 +21,11 @@ def reduceClusters(data, n_components=2):
     return pd.DataFrame(reduced_data, columns=[f"PC{i+1}" for i in range(n_components)])
 
 
+def getDataStats(data, labels, isSplit=""):
+    plotClusters2d(reduceClusters(data).values, labels, f"{isSplit}_true")
+    countRunTypes(mapLabelToRun(labels), isSplit)
+
+
 def main():
     # Set random seed for reproducibility
     np.random.seed(0)
@@ -27,9 +34,10 @@ def main():
     dpmm.initializeData()
 
     data = dpmm.preprocessData()
-    trainSplit = 0.8
-    trainIdx, testIdx = train_test_split(
-        data.index, train_size=trainSplit, random_state=0
+    getDataStats(data, dpmm.labels, isSplit="full")
+    trainSplit = 0.2
+    testIdx, trainIdx = train_test_split(
+        data.index, train_size=trainSplit, random_state=0, shuffle=False
     )
     trainData, testData = data.iloc[trainIdx], data.iloc[testIdx]
     trainLabels, testLabels = dpmm.labels[trainIdx.values], dpmm.labels[testIdx.values]
@@ -38,6 +46,9 @@ def main():
     trainData = reduceClusters(trainData, n_components=2)
     testData = reduceClusters(testData, n_components=2)
 
+    getDataStats(trainData, trainLabels, isSplit="train")
+    getDataStats(testData, testLabels, isSplit="test")
+
     assignments = np.array([])
     if Config.USE_SKLEARN:
         assignments = runSkLearn(trainData, trainLabels, fullTrain)
@@ -45,7 +56,7 @@ def main():
         assignments = fitDPM(dpmm, trainData, trainLabels, fullTrain)
 
     eval = Evaluation()
-    eval.fullEvaluate(assignments, trainLabels, trainData.values)
+    eval.fullEvaluate(assignments, trainLabels, trainData.values, "train")
 
     # Test on unseen data
     testAssignments = np.array([])
@@ -54,20 +65,17 @@ def main():
     else:
         testAssignments = predictDPM(dpmm, testData, testLabels, trainData, fullTest)
 
-    eval.fullEvaluate(testAssignments, testLabels, testData.values)
+    eval.fullEvaluate(testAssignments, testLabels, testData.values, "test")
 
     ######
-    # completeData = trainData + testData
-    # completeLabels = np.concatenate((trainLabels, testLabels))
-    # dpmm.predictFitSamples(testData.values, completeData.values)
-
-    # assignments = dpmm.assignments
-    # assignments = transformLabels(assignments)
-    # assignments = HungarianMatch(assignments, completeLabels)
-    # plotClusters2d(completeData.values, assignments)
-    # newClusters = mapRunToTier(assignments)
-    # newLabels = mapRunToTier(completeLabels)
-    # results3 = eval.evaluateAll(newClusters, newLabels, completeData.values)
+    completeData = pd.concat([trainData, testData])
+    completeLabels = np.concatenate((trainLabels, testLabels))
+    completeAssignments = fitDPM(
+        dpmm, completeData, completeLabels, pd.concat([fullTrain, fullTest])
+    )
+    eval.fullEvaluate(
+        completeAssignments, completeLabels, completeData.values, "complete"
+    )
 
 
 if __name__ == "__main__":

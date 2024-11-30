@@ -35,10 +35,10 @@ def fitDPM(dpmm, data, labels, fullData):
     assignments = dpmm.fit(data)
     assignments = transformLabels(assignments)
     assignments = HungarianMatch(assignments, labels)
-    plotClusters2d(data.values, assignments, "raw")
-    plotParallelCoordinates(
-        pd.DataFrame(fullData, columns=fullData.columns), assignments, "raw"
-    )
+    # plotClusters2d(data.values, assignments, "raw")
+    # plotParallelCoordinates(
+    #    pd.DataFrame(fullData, columns=fullData.columns), assignments, "raw"
+    # )
 
     return assignments
 

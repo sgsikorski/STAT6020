@@ -25,7 +25,7 @@ def plotParallelCoordinates(data, clusters, path=None):
     if Config.SAVE_FIGS:
         if path:
             plt.savefig(
-                f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}{path}/cluster_plot{Config.OUTPUT_SUFFIX}.png"
+                f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}{path}_cluster_plot{Config.OUTPUT_SUFFIX}.png"
             )
         else:
             plt.savefig(
@@ -117,11 +117,11 @@ def plotClusters2d(data, clusters, path=None):
     if Config.SAVE_FIGS:
         if path:
             plt.savefig(
-                f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}{path}/cluster_plot{Config.OUTPUT_SUFFIX}.png"
+                f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}{path}_cluster_plot{Config.OUTPUT_SUFFIX}.png"
             )
         else:
             plt.savefig(
                 f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}cluster_plot{Config.OUTPUT_SUFFIX}.png"
             )
-    if Config.DEBUG:
-        plt.show()
+    # if Config.DEBUG:
+    #     plt.show()

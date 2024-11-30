@@ -16,6 +16,20 @@ def mapRunToLabel(labels):
     return np.array([labelMap[label] for label in labels if label in labelMap])
 
 
+def mapLabelToRun(labels):
+    labelMap = {
+        -1: "NonRun",
+        0: "Race",
+        1: "Workout",
+        2: "Long Run",
+        3: "Training Run",
+        4: "Recovery",
+        5: "WU/CD",
+        6: "Shakeout",
+    }
+    return np.array([labelMap[label] for label in labels if label in labelMap])
+
+
 def mapRunToTier(labels):
     tiers = {
         -1: -1,
