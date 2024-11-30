@@ -35,9 +35,9 @@ def main():
 
     data = dpmm.preprocessData()
     getDataStats(data, dpmm.labels, isSplit="full")
-    trainSplit = 0.2
-    testIdx, trainIdx = train_test_split(
-        data.index, train_size=trainSplit, random_state=0, shuffle=False
+    trainSplit = 0.8
+    trainIdx, testIdx = train_test_split(
+        data.index, train_size=trainSplit, random_state=0
     )
     trainData, testData = data.iloc[trainIdx], data.iloc[testIdx]
     trainLabels, testLabels = dpmm.labels[trainIdx.values], dpmm.labels[testIdx.values]
