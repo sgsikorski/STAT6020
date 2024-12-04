@@ -16,6 +16,7 @@ class Evaluation:
         results = {}
         for method in self.methods:
             results[method] = self.evaluate(predLabels, trueLabels, method, dataValues)
+        results["Hierarchical"] = self.hierarchicalEvaluate(predLabels, trueLabels)
         return results
 
     def evaluate(self, predLabels, trueLabels=None, method="ARI", dataValues=None):
@@ -54,8 +55,13 @@ class Evaluation:
             print("Invalid evaluation method")
 
     # This should check the number that are classified as lower
-    def hierarchicalEvaluate(self):
-        pass
+    def hierarchicalEvaluate(self, assignments, labels):
+        assert len(assignments) == len(labels)
+        conditions = []
+        for a, l in zip(assignments, labels):
+            conditions.append(a <= l)
+        lower = np.sum(conditions)
+        return lower / len(assignments)
 
     def fullEvaluate(self, assignments, labels, data, path=None):
         tieredClusters = mapRunToTier(assignments)
@@ -65,11 +71,5 @@ class Evaluation:
 
         results = self.evaluateAll(assignments, labels, data)
         tieredResults = self.evaluateAll(tieredClusters, tieredLabels, data)
-        with open(
-            f"res/{'sk/' if Config.USE_SKLEARN else 'dpm/'}results{Config.OUTPUT_SUFFIX}.txt",
-            "w+",
-        ) as f:
-            print(results, file=f)
-            print(tieredResults, file=f)
-            print(results)
-            print(tieredResults)
+        print(results)
+        print(tieredResults)

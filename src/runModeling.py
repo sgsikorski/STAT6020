@@ -17,15 +17,13 @@ def getSklDPMM(alpha):
 
 
 def runSkLearn(data, labels, fullData):
-    skDPMM = getSklDPMM(100)
+    skDPMM = getSklDPMM(300)
     skDPMM.fit(data)
     assignments = skDPMM.predict(data)
     assignments = transformLabels(assignments)
     assignments = HungarianMatch(assignments, labels)
+    print(f"{len(set(assignments))} clusters found")
     plotClusters2d(data.values, assignments)
-    plotParallelCoordinates(
-        pd.DataFrame(fullData, columns=fullData.columns), assignments
-    )
 
     return assignments
 

@@ -99,7 +99,7 @@ class DPMM:
             self.idx = 0
             self.clusters = {0: [0]}
         for _ in range(self.iters):
-            prevNumClusters = len(self.clusters)
+            prevAssignments = np.copy(self.assignments)
             for n in range(self.N):
                 currP = data.iloc[n].values
                 currC = self.assignments[n]
@@ -115,7 +115,8 @@ class DPMM:
                 print(f"Number of Clusters: {len(self.clusters)}")
                 print(f"Cluster assignments: {self.assignments}")
 
-            if len(self.clusters) == 7 and len(self.clusters) == prevNumClusters:
+            # Change to no changed clusters
+            if np.sum(self.assignments != prevAssignments) == 0:
                 break
             self.idx = 0
         return self.assignments
@@ -154,9 +155,9 @@ class DPMM:
 
             posteriorProbs.append(prior * likelihood)
 
-        if len(self.clusters) < 20:
+        if len(self.clusters) < 50:
             # Add the probability of forming a new cluster
-            sigma = wishart.rvs(df=self.nu, scale=self.psi)
+            sigma = invwishart.rvs(df=self.nu, scale=self.psi)
             newMu = np.random.multivariate_normal(self.mu, sigma * self._lambda)
             newLikelihood = multivariate_normal.pdf(sample, mean=newMu, cov=sigma)
             newClusterPrior = self.alpha / (totalP + self.alpha)
@@ -170,7 +171,7 @@ class DPMM:
         posteriorProbs /= posteriorProbs.sum()
 
         # Sample new cluster assignment
-        newCluster = np.random.choice(len(posteriorProbs), p=posteriorProbs)
+        newCluster = np.argmax(posteriorProbs)
         if train:
             self.addPoint(self.idx, newCluster, new_cluster_possible)
             self.idx += 1

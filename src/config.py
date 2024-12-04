@@ -2,7 +2,7 @@ class Config:
     DEBUG = False
     EVALUATE = False
     USE_SKLEARN = False
-    OUTPUT_SUFFIX = "_2"
+    OUTPUT_SUFFIX = ""
     SAVE_FIGS = False
 
     @staticmethod

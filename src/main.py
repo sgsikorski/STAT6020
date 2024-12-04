@@ -30,14 +30,14 @@ def main():
     # Set random seed for reproducibility
     np.random.seed(0)
     Config.SetConfig(sys.argv[1:])
-    dpmm = DPMM(alpha=2, iters=100)
+    dpmm = DPMM(alpha=3, iters=100)
     dpmm.initializeData()
 
     data = dpmm.preprocessData()
     getDataStats(data, dpmm.labels, isSplit="full")
     trainSplit = 0.8
     trainIdx, testIdx = train_test_split(
-        data.index, train_size=trainSplit, random_state=0
+        data.index, train_size=trainSplit, random_state=0, shuffle=False
     )
     trainData, testData = data.iloc[trainIdx], data.iloc[testIdx]
     trainLabels, testLabels = dpmm.labels[trainIdx.values], dpmm.labels[testIdx.values]
@@ -56,6 +56,7 @@ def main():
         assignments = fitDPM(dpmm, trainData, trainLabels, fullTrain)
 
     eval = Evaluation()
+    print("TRAINING...")
     eval.fullEvaluate(assignments, trainLabels, trainData.values, "train")
 
     # Test on unseen data
@@ -65,17 +66,19 @@ def main():
     else:
         testAssignments = predictDPM(dpmm, testData, testLabels, trainData, fullTest)
 
+    print("TESTING...")
     eval.fullEvaluate(testAssignments, testLabels, testData.values, "test")
 
     ######
-    completeData = pd.concat([trainData, testData])
-    completeLabels = np.concatenate((trainLabels, testLabels))
-    completeAssignments = fitDPM(
-        dpmm, completeData, completeLabels, pd.concat([fullTrain, fullTest])
-    )
-    eval.fullEvaluate(
-        completeAssignments, completeLabels, completeData.values, "complete"
-    )
+    # dpmm.alpha = 1
+    # completeData = pd.concat([trainData, testData])
+    # completeLabels = np.concatenate((trainLabels, testLabels))
+    # completeAssignments = fitDPM(
+    #     dpmm, completeData, completeLabels, pd.concat([fullTrain, fullTest])
+    # )
+    # eval.fullEvaluate(
+    #     completeAssignments, completeLabels, completeData.values, "complete"
+    # )
 
 
 if __name__ == "__main__":
