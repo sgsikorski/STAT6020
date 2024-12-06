@@ -5,13 +5,13 @@ from scipy.optimize import linear_sum_assignment
 def mapRunToLabel(labels):
     labelMap = {
         "NonRun": -1,
-        "Race": 0,
-        "Workout": 1,
-        "Long Run": 2,
+        "Shakeout": 0,
+        "WU/CD": 1,
+        "Recovery": 2,
         "Training Run": 3,
-        "Recovery": 4,
-        "WU/CD": 5,
-        "Shakeout": 6,
+        "Long Run": 4,
+        "Workout": 5,
+        "Race": 6,
     }
     return np.array([labelMap[label] for label in labels if label in labelMap])
 
@@ -19,26 +19,44 @@ def mapRunToLabel(labels):
 def mapLabelToRun(labels):
     labelMap = {
         -1: "NonRun",
-        0: "Race",
-        1: "Workout",
-        2: "Long Run",
+        0: "Shakeout",
+        1: "WU/CD",
+        2: "Recovery",
         3: "Training Run",
-        4: "Recovery",
-        5: "WU/CD",
-        6: "Shakeout",
+        4: "Long Run",
+        5: "Workout",
+        6: "Race",
     }
     return np.array([labelMap[label] for label in labels if label in labelMap])
+
+
+def mapLabelToPlotName(label, isTiered=False):
+    labelMap = (
+        {
+            -1: "NR",
+            0: "SO",
+            1: "WU/CD",
+            2: "Rec",
+            3: "TR",
+            4: "LR",
+            5: "WO",
+            6: "Race",
+        }
+        if not isTiered
+        else {-1: "NR", 0: "SO/WU/CD/Rec", 1: "TR", 2: "LR", 3: "WO", 4: "Race"}
+    )
+    return labelMap[label] if label in labelMap else "Unknown"
 
 
 def mapRunToTier(labels):
     tiers = {
         -1: -1,
         0: 0,
-        1: 1,
-        2: 2,
-        3: 3,
-        4: 4,
-        5: 4,
+        1: 0,
+        2: 0,
+        3: 1,
+        4: 2,
+        5: 3,
         6: 4,
     }
     mapping = []

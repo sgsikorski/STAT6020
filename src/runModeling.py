@@ -25,6 +25,13 @@ def runSkLearn(data, labels, fullData):
     print(f"{len(set(assignments))} clusters found")
     plotClusters2d(data.values, assignments)
 
+    return assignments, skDPMM
+
+
+def predictSkDPMM(skDPMM, data, labels, trainData):
+    assignments = skDPMM.predict(data)
+    assignments = transformLabels(assignments)
+    assignments = HungarianMatch(assignments, labels)
     return assignments
 
 

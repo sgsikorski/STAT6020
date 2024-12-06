@@ -66,7 +66,8 @@ class Evaluation:
     def fullEvaluate(self, assignments, labels, data, path=None):
         tieredClusters = mapRunToTier(assignments)
         tieredLabels = mapRunToTier(labels)
-        plotClusters2d(data, labels, f"{path}_raw")
+        plotClusters2d(data, labels, f"{path}_true")
+        plotClusters2d(data, assignments, f"{path}_raw")
         plotClusters2d(data, tieredClusters, f"{path}_tiered")
 
         results = self.evaluateAll(assignments, labels, data)

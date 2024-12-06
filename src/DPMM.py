@@ -116,7 +116,7 @@ class DPMM:
                 print(f"Cluster assignments: {self.assignments}")
 
             # Change to no changed clusters
-            if np.sum(self.assignments != prevAssignments) == 0:
+            if np.sum(self.assignments != prevAssignments) <= 1:
                 break
             self.idx = 0
         return self.assignments
@@ -165,10 +165,6 @@ class DPMM:
             new_cluster_possible = True
         else:
             new_cluster_possible = False
-
-        # Normalize posterior probabilities
-        posteriorProbs = np.array(posteriorProbs)
-        posteriorProbs /= posteriorProbs.sum()
 
         # Sample new cluster assignment
         newCluster = np.argmax(posteriorProbs)

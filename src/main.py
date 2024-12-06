@@ -8,7 +8,7 @@ from DPMM import DPMM
 from config import Config
 from evaluation import Evaluation
 from util.dataStats import countRunTypes
-from runModeling import runSkLearn, fitDPM, predictDPM
+from runModeling import runSkLearn, fitDPM, predictDPM, predictSkDPMM
 from util.plot import plotClusters2d
 from util.mapRun import mapLabelToRun
 
@@ -35,6 +35,8 @@ def main():
 
     data = dpmm.preprocessData()
     getDataStats(data, dpmm.labels, isSplit="full")
+    data = reduceClusters(data, n_components=2)
+
     trainSplit = 0.8
     trainIdx, testIdx = train_test_split(
         data.index, train_size=trainSplit, random_state=0, shuffle=False
@@ -43,15 +45,15 @@ def main():
     trainLabels, testLabels = dpmm.labels[trainIdx.values], dpmm.labels[testIdx.values]
 
     fullTrain, fullTest = trainData, testData
-    trainData = reduceClusters(trainData, n_components=2)
-    testData = reduceClusters(testData, n_components=2)
+    # trainData = reduceClusters(trainData, n_components=2)
+    # testData = reduceClusters(testData, n_components=2)
 
     getDataStats(trainData, trainLabels, isSplit="train")
     getDataStats(testData, testLabels, isSplit="test")
 
     assignments = np.array([])
     if Config.USE_SKLEARN:
-        assignments = runSkLearn(trainData, trainLabels, fullTrain)
+        assignments, skDPMM = runSkLearn(trainData, trainLabels, fullTrain)
     else:
         assignments = fitDPM(dpmm, trainData, trainLabels, fullTrain)
 
@@ -62,7 +64,7 @@ def main():
     # Test on unseen data
     testAssignments = np.array([])
     if Config.USE_SKLEARN:
-        testAssignments = runSkLearn(testData, testLabels, fullTest)
+        testAssignments = predictSkDPMM(skDPMM, testData, testLabels, fullTest)
     else:
         testAssignments = predictDPM(dpmm, testData, testLabels, trainData, fullTest)
 
