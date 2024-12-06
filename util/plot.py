@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 
 from config import Config
+from util.mapRun import mapLabelToPlotName
 
 
 def plotParallelCoordinates(data, clusters, path=None):
@@ -107,7 +108,7 @@ def plotClusters2d(data, clusters, path=None):
         ax.text(
             center[0],
             center[1],
-            str(cluster),
+            str(mapLabelToPlotName(cluster, "tiered" in path if path else False)),
             color="black",
             fontsize=12,
             ha="center",
